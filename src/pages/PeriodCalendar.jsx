@@ -3,45 +3,53 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { format, subDays, eachDayOfInterval } from 'date-fns';
 import BottomNav from '../components/BottomNav';
+import DesktopNavbar from '../components/DesktopNavBar';
 
 export default function PeriodCalendar() {
   const [calendarData, setCalendarData] = useState(null);
   const [showLogModal, setShowLogModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
   const periodLength = 5;
-  const today = new Date();
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-     const getCalendarData = async () => {
-    try {
-      const token = localStorage.getItem('token');
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
 
-      const response = await fetch('https://her-solace-api.vercel.app/api/cycle/cycle-details', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    window.addEventListener('resize', handleResize);
 
-      const result = await response.json();
+    const getCalendarData = async () => {
+      try {
+        const token = localStorage.getItem('token');
 
-      if (result.success) {
-        setCalendarData(result);
+        const response = await fetch(
+          'https://her-solace-api.vercel.app/api/cycle/cycle-details',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+          setCalendarData(result);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    };
+
     getCalendarData();
+
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
- 
-
   const lastPeriod = useMemo(() => {
-    if (!calendarData?.lastPeriodDate) {
-      return new Date();
-    }
+    if (!calendarData?.lastPeriodDate) return new Date();
     return new Date(calendarData.lastPeriodDate);
   }, [calendarData]);
 
@@ -89,46 +97,69 @@ export default function PeriodCalendar() {
     try {
       const token = localStorage.getItem('token');
 
-      const response = await fetch('https://her-solace-api.vercel.app/api/cycle/period-date', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          periodDate: selectedDate.toISOString().split('T')[0],
-        }),
-      });
+      const response = await fetch(
+        'https://her-solace-api.vercel.app/api/cycle/period-date',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            periodDate: selectedDate.toISOString().split('T')[0],
+          }),
+        }
+      );
 
       const result = await response.json();
 
       if (result.success) {
         setShowLogModal(false);
-         const getCalendarData = async () => {
-    try {
-      const token = localStorage.getItem('token');
-
-      const response = await fetch('https://her-solace-api.vercel.app/api/cycle/cycle-details', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setCalendarData(result);
+        window.location.reload();
       }
     } catch (err) {
       console.log(err);
     }
   };
-        getCalendarData();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+  if (isDesktop) {
+    return (
+      <div>  <DesktopNavbar />
+      <div style={desktop.page}>
+        <div style={desktop.container}>
+          <div style={desktop.left}>
+            <h2>Cycle Calendar</h2>
+
+            <Calendar
+              value={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+            />
+
+            <button
+              style={{ ...styles.logBtn, marginTop: 20 }}
+              onClick={() => setShowLogModal(true)}
+            >
+              🩸 Log Period
+            </button>
+          </div>
+
+          <div style={desktop.right}>
+            <Legend />
+            <TrendCard cycleData={cycleData} />
+          </div>
+        </div>
+
+        <LogModal
+          showLogModal={showLogModal}
+          setShowLogModal={setShowLogModal}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          savePeriod={savePeriod}
+        />
+      </div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.page}>
@@ -137,69 +168,110 @@ export default function PeriodCalendar() {
           🩸 Log Period
         </button>
 
-        <Calendar value={selectedDate} onChange={(date) => setSelectedDate(date)} />
+        <Calendar
+          value={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+        />
 
-        {/* LEGEND */}
+        <Legend />
 
-        <div style={styles.legend}>
-          <div style={styles.legendItem}>
-            <div style={{ ...styles.dot, background: '#ff6b6b' }} />
-            Period
-          </div>
-
-          <div style={styles.legendItem}>
-            <div style={{ ...styles.dot, background: '#4dabf7' }} />
-            Ovulation
-          </div>
-
-          <div style={styles.legendItem}>
-            <div style={{ ...styles.dot, background: '#f6c343' }} />
-            Fertile Window
-          </div>
-
-          <div style={styles.legendItem}>
-            <div style={{ ...styles.dot, background: '#b197fc' }} />
-            PMS
-          </div>
-        </div>
-
-        {/* CYCLE TRENDS */}
-
-        <div style={styles.trendCard}>
-          <h3>Cycle Trends</h3>
-
-          {trendRow('Next Period', format(cycleData.nextPeriod, 'MMM d'))}
-
-          {trendRow(
-            'Ovulation Window',
-            `${format(cycleData.fertileStart, 'MMM d')} - ${format(cycleData.fertileEnd, 'MMM d')}`,
-          )}
-
-          {trendRow('PMS Alert', `${format(cycleData.pmsStart, 'MMM d')} - ${format(cycleData.pmsEnd, 'MMM d')}`)}
-        </div>
+        <TrendCard cycleData={cycleData} />
       </div>
 
-      {showLogModal && (
-        <div style={styles.modalOverlay}>
-          <div style={styles.modalCard}>
-            <h3>Last Period Date</h3>
+      <BottomNav active="PeriodCalendar" />
 
-            <Calendar value={selectedDate} onChange={(date) => setSelectedDate(date)} maxDate={new Date()} />
+      <LogModal
+        showLogModal={showLogModal}
+        setShowLogModal={setShowLogModal}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        savePeriod={savePeriod}
+      />
+    </div>
+  );
+}
 
-            <div style={styles.modalButtons}>
-              <button onClick={() => setShowLogModal(false)} style={styles.cancelBtn}>
-                Cancel
-              </button>
+function Legend() {
+  return (
+    <div style={styles.legend}>
+      <div style={styles.legendItem}>
+        <div style={{ ...styles.dot, background: '#ff6b6b' }} /> Period
+      </div>
 
-              <button onClick={savePeriod} style={styles.saveBtn}>
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
+      <div style={styles.legendItem}>
+        <div style={{ ...styles.dot, background: '#4dabf7' }} /> Ovulation
+      </div>
+
+      <div style={styles.legendItem}>
+        <div style={{ ...styles.dot, background: '#f6c343' }} /> Fertile Window
+      </div>
+
+      <div style={styles.legendItem}>
+        <div style={{ ...styles.dot, background: '#b197fc' }} /> PMS
+      </div>
+    </div>
+  );
+}
+
+function TrendCard({ cycleData }) {
+  return (
+    <div style={styles.trendCard}>
+      <h3>Cycle Trends</h3>
+
+      {trendRow('Next Period', format(cycleData.nextPeriod, 'MMM d'))}
+
+      {trendRow(
+        'Ovulation Window',
+        `${format(cycleData.fertileStart, 'MMM d')} - ${format(
+          cycleData.fertileEnd,
+          'MMM d'
+        )}`
       )}
 
-      <BottomNav active="PeriodCalendar" />
+      {trendRow(
+        'PMS Alert',
+        `${format(cycleData.pmsStart, 'MMM d')} - ${format(
+          cycleData.pmsEnd,
+          'MMM d'
+        )}`
+      )}
+    </div>
+  );
+}
+
+function LogModal({
+  showLogModal,
+  setShowLogModal,
+  selectedDate,
+  setSelectedDate,
+  savePeriod,
+}) {
+  if (!showLogModal) return null;
+
+  return (
+    <div style={styles.modalOverlay}>
+      <div style={styles.modalCard}>
+        <h3>Last Period Date</h3>
+
+        <Calendar
+          value={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          maxDate={new Date()}
+        />
+
+        <div style={styles.modalButtons}>
+          <button
+            onClick={() => setShowLogModal(false)}
+            style={styles.cancelBtn}
+          >
+            Cancel
+          </button>
+
+          <button onClick={savePeriod} style={styles.saveBtn}>
+            Save
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -317,5 +389,33 @@ const styles = {
     padding: '10px 20px',
     borderRadius: 10,
     cursor: 'pointer',
+  },
+};
+
+const desktop = {
+  page: {
+    background: '#f3f4f6',
+    minHeight: '100vh',
+    padding: 40,
+  },
+
+  container: {
+    maxWidth: 1100,
+    margin: 'auto',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 40,
+  },
+
+  left: {
+    background: '#fff',
+    padding: 30,
+    borderRadius: 20,
+  },
+
+  right: {
+    background: '#fff',
+    padding: 30,
+    borderRadius: 20,
   },
 };
