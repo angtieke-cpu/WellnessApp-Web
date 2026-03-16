@@ -425,7 +425,7 @@ const styles = {
   },
 
   input: {
-    width: "100%",
+    width: "90%",
     padding: 10,
     marginTop: 10,
     border: "1px solid #ddd",

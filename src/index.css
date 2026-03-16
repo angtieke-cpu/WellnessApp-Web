@@ -109,3 +109,36 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.range-slider {
+  width: 100%;
+  appearance: none;
+  height: 8px;
+  border-radius: 6px;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+/* Thumb */
+
+.range-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #c08497;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.range-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #c08497;
+  cursor: pointer;
+}

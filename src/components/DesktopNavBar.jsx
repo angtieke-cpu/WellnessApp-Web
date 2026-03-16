@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { Home, Calendar, Sparkles, ClipboardList, User } from 'lucide-react';
 
 export default function DesktopNavbar() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ export default function DesktopNavbar() {
         <NavItem label="Home" path="/home" />
         <NavItem label="Calendar" path="/calendar" />
         <NavItem label="Ai" path="/ai" />
+         <NavItem label="Log" path="/log" />
         <NavItem label="Profile" path="/profile" />
       </div>
 

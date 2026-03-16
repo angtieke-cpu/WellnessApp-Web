@@ -76,6 +76,8 @@ export default function StartJourney() {
       const result = await response.json();
 
       if (result.success) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user.id);
         navigate('/home');
       } else {
         alert(result.message || 'Something went wrong');
@@ -240,7 +242,7 @@ const styles = {
     textAlign: 'center',
   },
 
-  logo: { fontSize: 60 },
+  logo: { fontSize: 45 },
 
   title: {
     fontSize: 22,
@@ -294,7 +296,7 @@ const styles = {
     border: '1px solid #c08497',
     borderRadius: 20,
     marginTop: 20,
-    width: '100%',
+    width: '90%',
   },
 
   navRow: {
