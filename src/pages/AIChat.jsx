@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BottomNav from '../components/BottomNav';
 
 export default function AIChat() {
   const navigate = useNavigate();
@@ -178,6 +179,7 @@ export default function AIChat() {
           </div>
         </div>
       )}
+        <BottomNav active="ai" />
     </div>
   );
 }

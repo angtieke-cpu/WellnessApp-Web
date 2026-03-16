@@ -23,7 +23,8 @@ export default function BottomNav({ active }) {
     <div style={styles.nav}>
       {tabs.map((tab) => {
         const Icon = tab.icon;
-        const isActive = active === tab.route;
+        // const isActive = active === tab.route;
+        const isActive = location.pathname === tab.route;
 
         return (
           <button key={tab.route} style={styles.item} onClick={() => navigate(tab.route)}>
