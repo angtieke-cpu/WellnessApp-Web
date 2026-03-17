@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { format, subDays, addDays, eachDayOfInterval } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 import BottomNav from '../components/BottomNav';
 import DesktopNavbar from '../components/DesktopNavBar';
@@ -11,6 +12,7 @@ export default function PeriodCalendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showLogModal, setShowLogModal] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,6 +37,8 @@ export default function PeriodCalendar() {
           setCalendarData(result);
         }
       } catch (err) {
+            localStorage.clear();
+         navigate("/");
         console.log(err);
       }
     };

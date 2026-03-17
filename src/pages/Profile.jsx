@@ -79,15 +79,57 @@ export default function Profile() {
   const searchUser = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(
-      `https://her-solace-api.vercel.app/api/user/search?phone=${phone}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    // const res = await fetch(
+    //   // user/linked-users
+    //   `https://her-solace-api.vercel.app/api/user/search?phone=${phone}`,
+    //   { headers: { Authorization: `Bearer ${token}` } }
+    // );
+      const res = await fetch('https://her-solace-api.vercel.app/api/user/available-users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          mobile_number: Number(phone),
+        }),
+      });
+
+      // const data = await response.json();
 
     const result = await res.json();
 
-    if (result.success) {
-      setSearchResults(result.data);
+    if (result.length>0 && result[0].bleeding_days) {
+      setSearchResults(result);
+    }
+  };
+
+   const shareUser = async () => {
+    const token = localStorage.getItem("token");
+
+    // const res = await fetch(
+    //   // user/linked-users
+    //   `https://her-solace-api.vercel.app/api/user/search?phone=${phone}`,
+    //   { headers: { Authorization: `Bearer ${token}` } }
+    // );
+      const res = await fetch('https://her-solace-api.vercel.app/api/user/link-users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+         "mobile_number":phone, 
+    "relationship":"Friend"
+        }),
+      });
+
+      // const data = await response.json();
+
+    const result = await res.json();
+
+    if (result.length>0 && result[0].bleeding_days) {
+      setSearchResults(result);
     }
   };
 
@@ -240,8 +282,8 @@ export default function Profile() {
 
           {searchResults.map((item) => (
             <div key={item.id} style={styles.resultRow}>
-              <span>{item.id}</span>
-              <button onClick={() => setShareModal(false)}>Share</button>
+              <span>{item?.name}</span>
+              <button onClick={() => {setShareModal(false);shareUser()}}>Share</button>
             </div>
           ))}
         </Modal>

@@ -65,6 +65,7 @@ export default function Log() {
   }, []);
 
   const saveLog = async () => {
+    console.log(data)
     try {
       await fetch('https://her-solace-api.vercel.app/api/log', {
         method: 'POST',
@@ -101,7 +102,7 @@ export default function Log() {
 
   const content = (
     <div style={styles.container}>
-      <h2 style={styles.title}>Log Your Symptoms</h2>
+      <h2 style={styles.title} onClick={saveLog}>Log Your Symptoms</h2>
 
       {/* Cycle */}
 
