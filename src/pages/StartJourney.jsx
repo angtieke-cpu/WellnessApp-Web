@@ -76,8 +76,8 @@ export default function StartJourney() {
       const result = await response.json();
 
       if (result.success) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.user.id);
+        // localStorage.setItem('token', data.token);
+        // localStorage.setItem('userId', data.user.id);
         navigate('/home');
       } else {
         alert(result.message || 'Something went wrong');
