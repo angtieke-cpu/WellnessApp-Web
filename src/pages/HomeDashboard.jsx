@@ -36,8 +36,14 @@ export default function HomeDashboard() {
         if (result.success) {
           setHomeData(result.data);
         }
+        else{
+             localStorage.clear();
+         navigate("/");
+        }
       } catch (err) {
         console.log(err);
+         localStorage.clear();
+         navigate("/");
       }
     };
 

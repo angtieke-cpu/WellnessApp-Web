@@ -39,13 +39,17 @@ export default function LoginScreen() {
         });
       } else if (data.message === 'User not found, please signup') {
         alert('User not found. Please create an account');
-        navigate('/register');
+        // navigate('/register');
+         localStorage.clear();
+         navigate("/");
       } else {
         alert(data.message || 'Failed to send OTP');
       }
     } catch (err) {
       console.log(err);
       alert('Something went wrong');
+       localStorage.clear();
+         navigate("/");
     } finally {
       setLoading(false);
     }
