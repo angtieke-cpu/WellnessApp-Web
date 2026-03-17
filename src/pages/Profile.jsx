@@ -53,6 +53,25 @@ export default function Profile() {
       }
     };
 
+    const getLinkedUsers = async () => {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(
+        "https://her-solace-api.vercel.app/api/user/linked-users",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.success) {
+        // setUser(result.data);
+        // setEditName(result.data.name);
+        // setEditEmail(result.data.email);
+      }
+    };
+
     const getCycleDetails = async () => {
       const token = localStorage.getItem("token");
 
@@ -72,6 +91,7 @@ export default function Profile() {
 
     getUser();
     getCycleDetails();
+    getLinkedUsers();
 
     return () => window.removeEventListener("resize", resize);
   }, []);
@@ -84,27 +104,27 @@ export default function Profile() {
     //   `https://her-solace-api.vercel.app/api/user/search?phone=${phone}`,
     //   { headers: { Authorization: `Bearer ${token}` } }
     // );
-      const res = await fetch('https://her-solace-api.vercel.app/api/user/available-users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          mobile_number: Number(phone),
-        }),
-      });
+    const res = await fetch('https://her-solace-api.vercel.app/api/user/available-users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        mobile_number: Number(phone),
+      }),
+    });
 
-      // const data = await response.json();
+    // const data = await response.json();
 
     const result = await res.json();
 
-    if (result.length>0 && result[0].bleeding_days) {
+    if (result.length > 0 && result[0].bleeding_days) {
       setSearchResults(result);
     }
   };
 
-   const shareUser = async () => {
+  const shareUser = async () => {
     const token = localStorage.getItem("token");
 
     // const res = await fetch(
@@ -112,23 +132,23 @@ export default function Profile() {
     //   `https://her-solace-api.vercel.app/api/user/search?phone=${phone}`,
     //   { headers: { Authorization: `Bearer ${token}` } }
     // );
-      const res = await fetch('https://her-solace-api.vercel.app/api/user/link-users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-         "mobile_number":phone, 
-    "relationship":"Friend"
-        }),
-      });
+    const res = await fetch('https://her-solace-api.vercel.app/api/user/link-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        "mobile_number": phone,
+        "relationship": "Friend"
+      }),
+    });
 
-      // const data = await response.json();
+    // const data = await response.json();
 
     const result = await res.json();
 
-    if (result.length>0 && result[0].bleeding_days) {
+    if (result.length > 0 && result[0].bleeding_days) {
       setSearchResults(result);
     }
   };
@@ -252,7 +272,7 @@ export default function Profile() {
   return (
     <div style={styles.page}>
       {isDesktop && (
-        <DesktopNavbar/>
+        <DesktopNavbar />
       )}
 
       <div
@@ -283,7 +303,7 @@ export default function Profile() {
           {searchResults.map((item) => (
             <div key={item.id} style={styles.resultRow}>
               <span>{item?.name}</span>
-              <button onClick={() => {setShareModal(false);shareUser()}}>Share</button>
+              <button onClick={() => { setShareModal(false); shareUser() }}>Share</button>
             </div>
           ))}
         </Modal>
@@ -444,7 +464,7 @@ const styles = {
     padding: 10,
     border: "none",
     borderRadius: 10,
-    marginRight:20
+    marginRight: 20
   },
 
   modalOverlay: {

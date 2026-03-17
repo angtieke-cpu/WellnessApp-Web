@@ -42,15 +42,15 @@ export default function Log() {
 
     const loadData = async () => {
       try {
-        const res = await fetch('https://her-solace-api.vercel.app/api/log/today', {
+        const res = await fetch('https://her-solace-api.vercel.app/api/cycle/daily-log', {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const result = await res.json();
 
         if (result.success && result.data) {
-          setData(result.data);
-          setOriginal(result.data);
+          setData(result.data.log_data);
+          setOriginal(result.data.log_data);
         }
       } catch (e) {
         console.log(e);
@@ -67,7 +67,7 @@ export default function Log() {
   const saveLog = async () => {
     console.log(data)
     try {
-      await fetch('https://her-solace-api.vercel.app/api/log', {
+      await fetch('https://her-solace-api.vercel.app/api/cycle/daily-log', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -199,6 +199,11 @@ export default function Log() {
           onChange={(v) => setData({ ...data, routine: { ...data.routine, water: v } })}
         />
       </Card>
+
+       <button style={styles.button} onClick={saveLog}>
+          Log Symptoms
+        </button>
+
     </div>
   );
 
@@ -214,6 +219,7 @@ export default function Log() {
             <p style={{ color: '#888' }}>Track daily symptoms to improve predictions.</p>
           </div>
         </div>
+
       </div>
     );
   }
@@ -416,6 +422,17 @@ const styles = {
   chip: { border: '1px solid #c08497', padding: '8px 14px', borderRadius: 12, cursor: 'pointer' },
   emojiRow: { display: 'flex', gap: 10 },
   loading: { height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  button: {
+    width: "min(100%, 300px)",
+    background: '#E8A6C9',
+    padding: '15px',
+    borderRadius: 16,
+    border: 'none',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 600,
+    cursor: 'pointer',
+  },
 };
 
 const desktop = {
@@ -423,4 +440,5 @@ const desktop = {
   container: { maxWidth: 1100, margin: 'auto', display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 40, padding: 40 },
   left: {},
   right: { background: '#fff', padding: 30, borderRadius: 20 },
+
 };

@@ -32,9 +32,7 @@ export default function RegisterOTPScreen() {
       const data = await response.json();
 
       if (data?.success) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.user.id);
-
+        localStorage.setItem('tempToken', data.token);
         navigate('/start-journey', {
           state: { userId: userDetails.userId },
         });

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function StartJourney() {
@@ -47,7 +47,7 @@ export default function StartJourney() {
 
   const finish = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('tempToken');
 
       const ageGroup = getAgeGroup(data.dob);
 
@@ -74,10 +74,12 @@ export default function StartJourney() {
       });
 
       const result = await response.json();
+      console.log(result);
 
       if (result.success) {
-        // localStorage.setItem('token', data.token);
-        // localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('userId', result.user.id);
+        localStorage.removeItem('tempToken');
         navigate('/home');
       } else {
         alert(result.message || 'Something went wrong');
@@ -87,6 +89,7 @@ export default function StartJourney() {
       alert('Network error');
     }
   };
+
 
   const progress = (index / (TOTAL_STEPS - 1)) * 100;
 
