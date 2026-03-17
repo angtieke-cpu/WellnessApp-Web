@@ -183,12 +183,7 @@ code {
   background: #f8d7e6;
 }
 
-.react-calendar__tile.periodDay,
-.react-calendar__tile.ovulationDay,
-.react-calendar__tile.fertileDay,
-.react-calendar__tile.pmsDay {
-  position: relative;
-}
+
 
 .react-calendar__tile.periodDay::after,
 .react-calendar__tile.ovulationDay::after,
@@ -196,36 +191,10 @@ code {
 .react-calendar__tile.pmsDay::after {
   content: "";
   position: absolute;
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 8px;
-}
-
-/* COLORS */
-
-.react-calendar__tile.periodDay::after {
-  background: #ff6b6b;
-}
-
-.react-calendar__tile.ovulationDay::after {
-  background: #4dabf7;
-}
-
-.react-calendar__tile.fertileDay::after {
-  background: #f6c343;
-}
-
-.react-calendar__tile.pmsDay::after {
-  background: #b197fc;
-}
-
-/* text above marker */
-
-.react-calendar__tile abbr {
-  position: relative;
-  z-index: 2;
-  color: black;
 }

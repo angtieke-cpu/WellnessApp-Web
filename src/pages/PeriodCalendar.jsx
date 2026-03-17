@@ -211,6 +211,7 @@ export default function PeriodCalendar() {
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           savePeriod={savePeriod}
+          lastPeriod={lastPeriod}
         />
       </div>
     );
@@ -238,6 +239,7 @@ export default function PeriodCalendar() {
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
         savePeriod={savePeriod}
+         lastPeriod={lastPeriod}
       />
     </div>
   );
@@ -286,7 +288,7 @@ function TrendCard({ cycleTrends }) {
   );
 }
 
-function LogModal({ showLogModal, setShowLogModal, selectedDate, setSelectedDate, savePeriod }) {
+function LogModal({ showLogModal, setShowLogModal, selectedDate, setSelectedDate, savePeriod,lastPeriod }) {
   if (!showLogModal) return null;
 
   return (
@@ -294,7 +296,7 @@ function LogModal({ showLogModal, setShowLogModal, selectedDate, setSelectedDate
       <div style={styles.modalCard}>
         <h3>Last Period Date</h3>
 
-        <Calendar value={selectedDate} onChange={(date) => setSelectedDate(date)} maxDate={new Date()} />
+        <Calendar value={selectedDate}   minDate={new Date(lastPeriod)} onChange={(date) => setSelectedDate(date)} maxDate={new Date()} />
 
         <div style={styles.modalButtons}>
           <button style={styles.cancelBtn} onClick={() => setShowLogModal(false)}>
