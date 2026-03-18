@@ -95,7 +95,7 @@ function MobileView({ homeData, navigate, getGreeting }) {
 
         <div style={styles.welcomeCard}>
           <h3 style={styles.welcomeTitle}>
-            Hi {homeData?.name ?? 'there'}, {getGreeting()} 👋
+            Hi {homeData?.username ?? 'there'}, {getGreeting()} 👋
           </h3>
 
           <p style={styles.welcomeText}>
