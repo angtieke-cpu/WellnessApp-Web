@@ -37,12 +37,12 @@ export default function HomeDashboard() {
           setHomeData(result.data);
         }
         else{
-             localStorage.clear();
-         navigate("/");
+        //      localStorage.clear();
+        //  navigate("/");
         }
       } catch (err) {
-        console.log(err);
-         localStorage.clear();
+        // console.log(err);
+        //  localStorage.clear();
          navigate("/");
       }
     };
@@ -55,9 +55,10 @@ export default function HomeDashboard() {
   const getGreeting = () => {
     const hour = new Date().getHours();
 
-    if (hour < 12) return 'Good Morning';
-    if (hour < 18) return 'Good Afternoon';
-    return 'Good Evening';
+   if (hour < 12) return 'Good Morning';
+if (hour < 15) return 'Good Afternoon';
+if (hour < 19) return 'Good Evening';
+return 'Winding down for the night? Here’s how your day looked.';
   };
 
   if (isDesktop) {
