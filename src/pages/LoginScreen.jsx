@@ -38,7 +38,7 @@ export default function LoginScreen() {
           },
         });
       } else if (data.message === 'User not found, please signup') {
-        alert('User not found. Please create an account');
+        alert('This mobile number is not registered. Please create an account.');
         // navigate('/register');
          localStorage.clear();
          navigate("/");

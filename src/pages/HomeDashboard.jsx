@@ -104,14 +104,15 @@ function MobileView({ homeData, navigate, getGreeting }) {
           </p>
 
           <p style={styles.welcomeSub}>
-            {homeData?.cycleGuide?.physical_state} • {homeData?.cycleGuide?.mental_state}
+            {homeData?.cycleGuide?.daily_highlight}
+            {/* {homeData?.cycleGuide?.physical_state} • {homeData?.cycleGuide?.mental_state} */}
           </p>
         </div>
 
         <div style={styles.grid}>
           <InfoCard title="Energy ✨" value={homeData?.cycleGuide?.energy} sub={homeData?.cycleGuide?.physical_state} />
           <InfoCard title="Mood 😊" value={homeData?.cycleGuide?.mood} sub={homeData?.cycleGuide?.mental_state} />
-          <InfoCard title="Anxiety 🌿" value={homeData?.cycleGuide?.anxiety} sub="Common before period" />
+          <InfoCard title="Anxiety 🌿" value={homeData?.cycleGuide?.anxiety} sub={homeData?.cycleGuide?.anxiety_state} />
           <InfoCard title="Social 🤝" value={homeData?.cycleGuide?.focus} sub={homeData?.cycleGuide?.social_drive} />
         </div>
 
