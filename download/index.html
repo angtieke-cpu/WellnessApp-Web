@@ -1,4 +1,4 @@
-```html
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -47,6 +47,10 @@
 
 		* {
 			box-sizing: border-box;
+		}
+
+		html {
+			visibility: hidden;
 		}
 
 		html,
@@ -468,6 +472,13 @@
 			}
 		}
 	</style>
+	<noscript>
+		<style>
+			html {
+				visibility: visible;
+			}
+		</style>
+	</noscript>
 </head>
 
 <body>
@@ -672,6 +683,9 @@
 
 		}
 
+		const redirectingToStore =
+			(isIOS || isAndroid) && !alreadyRedirected;
+
 
 		/* ==========================================
 		   IOS
@@ -732,22 +746,8 @@
 				}
 
 
-				/*
-					Give Safari a very small amount
-					of time to save sessionStorage
-					before handing control to the
-					native App Store.
-				*/
-
-				setTimeout(
-					function () {
-
-						window.location.replace(
-							appStoreLinks.apple
-						);
-
-					},
-					150
+				window.location.replace(
+					appStoreLinks.apple
 				);
 
 			}
@@ -831,15 +831,8 @@
 				}
 
 
-				setTimeout(
-					function () {
-
-						window.location.replace(
-							appStoreLinks.android
-						);
-
-					},
-					150
+				window.location.replace(
+					appStoreLinks.android
 				);
 
 			}
@@ -912,8 +905,13 @@
 
 		}
 
+		if (!redirectingToStore) {
+			document.documentElement.style.visibility =
+				'visible';
+		}
+
 	</script>
 
 </body>
 </html>
-```
+
