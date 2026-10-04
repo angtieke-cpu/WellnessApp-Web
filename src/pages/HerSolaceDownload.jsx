@@ -107,7 +107,7 @@ export default function HerSolaceDownload() {
       >
         <div className="brand-mark">
           <img
-            src="/assets/favicon.png"
+            src="logo.png"
             alt="HerSolace logo"
           />
         </div>
