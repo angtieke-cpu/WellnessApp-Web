@@ -39,7 +39,7 @@ return (
 
 <Route path="/welcome" element={<WelcomeScreen />} />
 
-<Route path="/home" element={<HomePage />} />  
+<Route path="/homepage" element={<HomePage />} />  
 
 <Route path="/login" element={<LoginScreen />} />
 
