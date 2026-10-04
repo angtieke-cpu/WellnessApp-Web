@@ -1,6 +1,6 @@
 /* HerSolace homepage portable styles — no Tailwind required. */
 .hersolace-homepage {
-  --hs-cream: oklch(0.972 0.014 78.3);
+  --hs-cream: #fff8f2;
   --hs-sand: oklch(0.921 0.032 78.2);
   --hs-rose: oklch(0.760 0.120 15);
   --hs-amber: oklch(0.760 0.127 70.3);
