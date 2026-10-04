@@ -10,7 +10,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
-import logoUrl from "./hersolace-logo.jpeg";
+import logoUrl from "hersolace-logo.jpeg";
 
 
 const PHASES = [
