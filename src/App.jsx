@@ -21,6 +21,7 @@ import Log from "./pages/Log";
 import TermsScreen from "./pages/TermsScreen";
 import PrivacyScreen from "./pages/PrivacyScreen";
 import HerSolaceDownload from "./pages/HerSolaceDownload";
+import HomePage from "./pages/HomePage";
 
 export default function App() {
 
@@ -37,6 +38,8 @@ return (
 {/* Auth */}
 
 <Route path="/welcome" element={<WelcomeScreen />} />
+
+<Route path="/home" element={<HomePage />} />  
 
 <Route path="/login" element={<LoginScreen />} />
 
