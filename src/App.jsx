@@ -20,6 +20,7 @@ import Log from "./pages/Log";
 
 import TermsScreen from "./pages/TermsScreen";
 import PrivacyScreen from "./pages/PrivacyScreen";
+import HerSolaceDownload from "./pages/HerSolaceDownload";
 
 export default function App() {
 
@@ -66,6 +67,8 @@ return (
 <Route path="/terms" element={<TermsScreen />} />
 
 <Route path="/privacy" element={<PrivacyScreen />} />
+
+<Route path="/download" element={<HerSolaceDownload />} />  
 
 {/* Catch unknown routes */}
 
