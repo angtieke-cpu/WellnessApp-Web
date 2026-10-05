@@ -33,7 +33,7 @@ return (
 
 {/* Default */}
 
-<Route path="/" element={<Navigate to="/welcome" />} />
+<Route path="/" element={<Navigate to="/HomePage" />} />
 
 {/* Auth */}
 
