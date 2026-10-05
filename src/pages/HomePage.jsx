@@ -6,19 +6,18 @@ import {
   Brain,
   Dumbbell,
   Moon,
-  QrCode,
   Sparkles,
   Zap,
 } from "lucide-react";
-
-
 const logoUrl = "/hersolace-logo.jpeg";
+const appStoreQrUrl = "/hersolace-app_store-qr.png";
+const playStoreQrUrl = "/hersolace-play_store-qr.png";
 
 
 const PHASES = [
   {
     name: "Menstrual",
-    color: "var(--phase-menstrual)",
+    color: "var(--hs-phase-menstrual)",
     days: "Days 1–5",
     energy: "Lower, more inward",
     mood: "Reflective",
@@ -27,7 +26,7 @@ const PHASES = [
   },
   {
     name: "Follicular",
-    color: "var(--phase-follicular)",
+    color: "var(--hs-phase-follicular)",
     days: "Days 6–13",
     energy: "Rising and vital",
     mood: "Optimistic, focused",
@@ -36,7 +35,7 @@ const PHASES = [
   },
   {
     name: "Ovulatory",
-    color: "var(--phase-ovulatory)",
+    color: "var(--hs-phase-ovulatory)",
     days: "Days 14–16",
     energy: "Peak and high",
     mood: "Confident, social",
@@ -45,7 +44,7 @@ const PHASES = [
   },
   {
     name: "Luteal",
-    color: "var(--phase-luteal)",
+    color: "var(--hs-phase-luteal)",
     days: "Days 17–28",
     energy: "Gradually tapers",
     mood: "More sensitive",
@@ -530,14 +529,16 @@ export default function HomePage() {
              Be among the first to try hersolace
           </h2>
            <div className="hs-relative hs-mx-auto hs-mt-8 hs-grid hs-max-w-md hs-grid-cols-2 hs-gap-4">
-             {["App Store", "Play Store"].map((store) => (
-               <div key={store} className="hs-rounded-xl hs-border hs-border-ink/10 hs-bg-cream/85 hs-p-4">
-                 <div className="hs-mx-auto hs-grid hs-aspect-square hs-max-w-28 hs-place-items-center hs-border hs-border-dashed hs-border-ink/25 hs-bg-sand/40">
-                   <QrCode className="hs-size-14 hs-text-ink/35" aria-hidden="true" />
-                 </div>
+             {[
+               { store: "App Store", qr: appStoreQrUrl, href: "https://apps.apple.com/in/app/hersolace/id6767090399" },
+               { store: "Play Store", qr: playStoreQrUrl, href: "https://play.google.com/store/apps/details?id=com.wellness.hersolace" },
+             ].map(({ store, qr, href }) => (
+               <a key={store} href={href} target="_blank" rel="noreferrer"
+                 className="hs-rounded-xl hs-border hs-border-ink/10 hs-bg-cream/85 hs-p-4 hs-transition hs-hover:-translate-y-0.5">
+                 <img src={qr} alt={`${store} QR code`} className="hs-mx-auto hs-aspect-square hs-max-w-28 hs-w-full hs-object-contain" />
                  <p className="hs-mt-3 hs-text-sm hs-font-semibold">{store}</p>
-                 <p className="hs-mt-1 hs-text-[11px] hs-text-ink/50">QR code coming soon</p>
-               </div>
+                 <p className="hs-mt-1 hs-text-[11px] hs-text-ink/50">Scan to download</p>
+               </a>
              ))}
            </div>
            <p className="hs-relative hs-mt-7 hs-text-sm hs-text-ink/65">
