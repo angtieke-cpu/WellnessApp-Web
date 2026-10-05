@@ -54,29 +54,25 @@ const PHASES = [
 ];
 
 const GUIDANCE = [
-  { label: "Nutrition & seed cycling", note: "eat with the phase", icon: Apple },
-  { label: "Movement & training", note: "train with your energy", icon: Dumbbell },
-  { label: "Sleep & recovery", note: "protect the hard week", icon: Moon },
-  { label: "Stress & nervous system", note: "lower the load", icon: Brain },
-  { label: "Energy & mood", note: "plan around the curve", icon: Zap },
-  { label: "Symptom forecast", note: "see it before it lands", icon: Activity },
-  { label: "Skin & hair care", note: "the cycle you can see", icon: Sparkles },
+  { label: "Nutrition and seed cycling", icon: Apple },
+  { label: "Movement & Exercise", icon: Dumbbell },
+  { label: "Sleep hygiene", icon: Moon },
+  { label: "Stress Management", icon: Brain },
+  { label: "Mental well-being", icon: Zap },
+  { label: "Symptom forecast", icon: Activity },
+  { label: "Skin & hair care", icon: Sparkles },
 ];
 
 export default function HomePage() {
   return (
     <div className="hersolace-homepage hs-min-h-screen hs-bg-cream hs-text-ink hs-antialiased hs-selection:bg-rose/30">
       <header className="hs-mx-auto hs-flex hs-max-w-6xl hs-items-center hs-justify-between hs-px-6 hs-pt-7">
-        <div className="hs-flex hs-items-center hs-gap-2.5">
-          <img src={logoUrl} alt="hersolace logo" className="hs-size-10 hs-rounded-full hs-object-cover" />
-          <span className="hs-font-display hs-text-xl hs-tracking-tight">hersolace</span>
-        </div>
         <nav className="hs-hidden hs-items-center hs-gap-8 hs-text-sm hs-text-ink/70 hs-md:flex">
           <a href="#formula" className="hs-hover:text-ink">
             4 · 7 · 1
           </a>
           <a href="#about" className="hs-hover:text-ink">
-            About Us
+            About
           </a>
           <a href="#tutorial" className="hs-hover:text-ink">
             How It Works
@@ -93,6 +89,10 @@ export default function HomePage() {
         </a>
       </header>
 
+      <div className="hs-logo-banner" aria-label="hersolace brand banner">
+        <img src={logoUrl} alt="hersolace" />
+      </div>
+
       {/* HERO */}
       <section className="hs-relative hs-mx-auto hs-max-w-6xl hs-overflow-hidden hs-px-6 hs-pt-16 hs-pb-24">
         <div className="hs-glow hs-absolute hs-inset-0 hs--z-10" />
@@ -106,7 +106,7 @@ export default function HomePage() {
               AI-powered women’s hormonal wellness and longevity platform
             </p>
             <h1 className="hs-mt-5 hs-font-display hs-text-[3.4rem] hs-leading-[1.02] hs-tracking-tight">
-              Decode Hormones.
+              <span className="hs-text-plum">Decode Hormones.</span>
               <br />
               <span className="hs-italic hs-text-coral">Discover You.</span>
             </h1>
@@ -164,7 +164,7 @@ export default function HomePage() {
               <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
                 Your cycle rhythm
               </p>
-              <h2 className="hs-mt-2 hs-font-display hs-text-2xl hs-leading-tight">
+              <h2 className="hs-mt-2 hs-font-display hs-text-2xl hs-leading-tight hs-text-coral">
                 How energy, mood &amp; sleep shift
               </h2>
               <div className="hs-relative hs-mx-auto hs-mt-5 hs-h-[27rem] hs-w-full hs-max-w-[29rem] hs-sm:h-[30rem]">
@@ -280,15 +280,12 @@ export default function HomePage() {
                   </span>
                 </div>
                 <ul className="hs-mt-7 hs-divide-y hs-divide-cream/10">
-                  {GUIDANCE.map(({ label, note, icon: Icon }) => (
+                  {GUIDANCE.map(({ label, icon: Icon }) => (
                     <li key={label} className="hs-flex hs-items-center hs-gap-3 hs-py-2.5">
                       <span className="hs-grid hs-size-8 hs-shrink-0 hs-place-items-center hs-rounded-xl hs-border hs-border-cream/12 hs-bg-cream/[0.06] hs-text-amber hs-transition hs-duration-300 hs-hover:border-amber/45 hs-hover:bg-amber/15">
                         <Icon className="hs-size-4" strokeWidth={1.75} aria-hidden="true" />
                       </span>
                       <span className="hs-text-[13px] hs-font-semibold hs-leading-tight">{label}</span>
-                      <span className="hs-ml-auto hs-shrink-0 hs-text-right hs-text-[10px] hs-leading-tight hs-text-cream/35">
-                        {note}
-                      </span>
                     </li>
                   ))}
                 </ul>
@@ -370,9 +367,9 @@ export default function HomePage() {
         <div className="hs-mx-auto hs-max-w-6xl hs-px-6 hs-py-24">
           <div className="hs-max-w-xl">
             <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
-              About us
+              About
             </p>
-            <h2 className="hs-mt-3 hs-font-display hs-text-4xl hs-leading-tight hs-tracking-tight">
+            <h2 className="hs-mt-3 hs-font-display hs-text-4xl hs-leading-tight hs-tracking-tight hs-text-plum">
                Why hersolace exists
             </h2>
             <p className="hs-mt-5 hs-leading-relaxed hs-text-ink/65">
@@ -380,46 +377,6 @@ export default function HomePage() {
                stress and sleep. hersolace turns that biology into personal guidance, so you can
                understand your patterns instead of guessing.
             </p>
-          </div>
-
-          <div className="hs-mt-12 hs-grid hs-gap-5 hs-md:grid-cols-2">
-            <div className="hs-rounded-2xl hs-bg-cream hs-p-7">
-              <h3 className="hs-font-display hs-text-2xl hs-tracking-tight">
-                Phase-Aware AI Recommendations
-              </h3>
-              <p className="hs-mt-3 hs-leading-relaxed hs-text-ink/65">
-                 Unlike trackers that log data and stop there, hersolace routes every symptom, mood
-                and check-in entry into a central AI model. That model generates your daily
-                nutrition, movement and recovery guidance — not a generic content library, and not a
-                static one-size-fits-all cycle chart.
-              </p>
-            </div>
-            <div className="hs-rounded-2xl hs-bg-cream hs-p-7">
-              <h3 className="hs-font-display hs-text-2xl hs-tracking-tight">Built for Every Life Stage</h3>
-              <p className="hs-mt-3 hs-leading-relaxed hs-text-ink/65">
-                 Most cycle apps are built around a single use case — usually conception. hersolace
-                serves women from menarche to menopause, including future support for PCOS,
-                hormonal contraceptive use, postpartum and perimenopause.
-              </p>
-            </div>
-            <div className="hs-rounded-2xl hs-bg-cream hs-p-7">
-              <h3 className="hs-font-display hs-text-2xl hs-tracking-tight">
-                Optimized for decades, not a month
-              </h3>
-              <p className="hs-mt-3 hs-leading-relaxed hs-text-ink/65">
-                Hormonal patterns tracked consistently over years are early signals for long-term
-                health. Pattern memory across years, compounding phase-aligned habits, and a
-                doctor-ready export you can bring to your gynecologist — longevity is the reason our
-                AI model exists.
-              </p>
-            </div>
-            <div className="hs-rounded-2xl hs-bg-cream hs-p-7">
-              <h3 className="hs-font-display hs-text-2xl hs-tracking-tight">Privacy by Design</h3>
-              <p className="hs-mt-3 hs-leading-relaxed hs-text-ink/65">
-                Built on a DPDP Act 2023–compliant framework, with Anonymous Mode and App Lock
-                giving you control over who sees what, and when.
-              </p>
-            </div>
           </div>
 
         </div>
