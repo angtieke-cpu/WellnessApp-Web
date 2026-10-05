@@ -94,7 +94,7 @@ export default function HomePage() {
       </div>
 
       {/* HERO */}
-      <section className="hs-relative hs-mx-auto hs-max-w-6xl hs-overflow-hidden hs-px-6 hs-pt-16 hs-pb-24">
+      <section className="hs-relative hs-mx-auto hs-max-w-6xl hs-overflow-hidden hs-px-6 hs-pb-24">
         <div className="hs-glow hs-absolute hs-inset-0 hs--z-10" />
         <div
           className="hs-absolute hs-top-[-18%] hs-right-[-10%] hs--z-10 hs-size-96 hs-rounded-full hs-opacity-60 hs-blur-3xl"
