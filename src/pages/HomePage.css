@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap");
 /* HerSolace homepage portable styles — no Tailwind required. */
 .hersolace-homepage {
-  --hs-cream: #fff8f2;
+  --hs-cream: #ffffff;
   --hs-sand: oklch(0.921 0.032 78.2);
   --hs-rose: oklch(0.760 0.120 15);
   --hs-amber: oklch(0.760 0.127 70.3);
@@ -261,7 +261,7 @@
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   min-height:clamp(360px,70vh,760px);
   padding:6rem 1.5rem 3rem;
-  background:linear-gradient(180deg,#fff 0%,#fff 82%,var(--hs-cream) 100%);
+  background:#fff;
   border-bottom:1px solid color-mix(in oklab,var(--hs-ink) 6%,transparent);
 }
 .hersolace-homepage .hs-hero-banner img{
@@ -269,33 +269,49 @@
   aspect-ratio:925/380;object-fit:contain;
 }
 
-/* Menu sits at the top of the banner */
+/* Desktop menu: plain links at the top right of the banner */
 .hersolace-homepage .hs-main-nav{
-  position:absolute;top:1.5rem;left:50%;transform:translateX(-50%);z-index:10;
-  display:flex;align-items:center;gap:.25rem;
-  padding:.35rem;border-radius:9999px;
-  background:color-mix(in oklab,#fff 80%,transparent);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border:1px solid color-mix(in oklab,var(--hs-plum) 15%,transparent);
-  box-shadow:0 10px 30px -14px color-mix(in oklab,var(--hs-plum) 45%,transparent);
-  white-space:nowrap;
+  position:absolute;top:1.75rem;right:2.5rem;z-index:20;
+  display:flex;align-items:center;gap:2rem;
 }
 .hersolace-homepage .hs-main-nav a{
-  padding:.6rem 1.25rem;border-radius:9999px;
-  font-size:.9rem;font-weight:600;line-height:1.25rem;
+  position:relative;padding:.4rem 0;
+  font-size:.95rem;font-weight:600;line-height:1.25rem;
   color:var(--hs-ink);
-  transition:background-color .2s ease,color .2s ease;
+  transition:color .2s ease;
+}
+.hersolace-homepage .hs-main-nav a:not(.hs-nav-cta)::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;
+  background:var(--hs-coral);transform:scaleX(0);transform-origin:left;transition:transform .2s ease;
 }
 .hersolace-homepage .hs-main-nav a:hover,
-.hersolace-homepage .hs-main-nav a:focus-visible{
-  background:color-mix(in oklab,var(--hs-plum) 10%,transparent);
-  color:var(--hs-plum);outline:none;
-}
+.hersolace-homepage .hs-main-nav a:focus-visible{color:var(--hs-plum);outline:none}
+.hersolace-homepage .hs-main-nav a:not(.hs-nav-cta):hover::after,
+.hersolace-homepage .hs-main-nav a:not(.hs-nav-cta):focus-visible::after{transform:scaleX(1)}
 .hersolace-homepage .hs-main-nav a.hs-nav-cta{
-  margin-left:.25rem;background:var(--hs-gradient-warm);color:#fff;
+  padding:.65rem 1.4rem;border-radius:9999px;
+  background:var(--hs-gradient-warm);color:#fff;
   box-shadow:0 8px 18px -10px color-mix(in oklab,var(--hs-coral) 70%,transparent);
+  transition:transform .2s ease,filter .2s ease;
 }
-.hersolace-homepage .hs-main-nav a.hs-nav-cta:hover{filter:brightness(1.08);color:#fff}
+.hersolace-homepage .hs-main-nav a.hs-nav-cta:hover{color:#fff;filter:brightness(1.08);transform:translateY(-1px)}
+
+/* Hamburger button (mobile only) */
+.hersolace-homepage .hs-menu-toggle{
+  display:none;
+  position:absolute;top:1rem;right:1rem;z-index:30;
+  width:2.75rem;height:2.75rem;padding:0;border:0;border-radius:.75rem;
+  background:#fff;cursor:pointer;
+  box-shadow:0 4px 14px -6px color-mix(in oklab,var(--hs-ink) 35%,transparent);
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.hersolace-homepage .hs-menu-toggle span{
+  display:block;width:1.3rem;height:2px;border-radius:2px;background:var(--hs-plum);
+  transition:transform .25s ease,opacity .2s ease;
+}
+.hersolace-homepage .hs-menu-toggle.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hersolace-homepage .hs-menu-toggle.is-open span:nth-child(2){opacity:0}
+.hersolace-homepage .hs-menu-toggle.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* Footer menu */
 .hersolace-homepage .hs-footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.25rem}
@@ -348,12 +364,24 @@ html:has(.hersolace-homepage){scroll-behavior:smooth}
   .hersolace-homepage .hs-hero-copy .hs-flex{justify-content:center}
 }
 
-@media (max-width:767px){
-  .hersolace-homepage .hs-hero-banner{min-height:auto;padding:5rem .75rem 1.5rem}
-  .hersolace-homepage .hs-main-nav{top:1rem;max-width:calc(100% - 1.5rem);gap:0}
-  .hersolace-homepage .hs-main-nav a{padding:.5rem .7rem;font-size:.78rem}
-  .hersolace-homepage .hs-main-nav a.hs-nav-cta{margin-left:.15rem}
+/* Tablet and mobile: hamburger with a dropdown panel */
+@media (max-width:900px){
+  .hersolace-homepage .hs-menu-toggle{display:flex}
+  .hersolace-homepage .hs-main-nav{
+    top:4.25rem;right:1rem;left:1rem;
+    flex-direction:column;align-items:stretch;gap:.25rem;
+    padding:.75rem;border-radius:1rem;background:#fff;
+    border:1px solid color-mix(in oklab,var(--hs-ink) 8%,transparent);
+    box-shadow:0 18px 40px -16px color-mix(in oklab,var(--hs-ink) 35%,transparent);
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease,transform .2s ease,visibility .2s;
+  }
+  .hersolace-homepage .hs-main-nav.is-open{opacity:1;visibility:visible;transform:none}
+  .hersolace-homepage .hs-main-nav a{padding:.85rem 1rem;border-radius:.6rem;font-size:1rem}
+  .hersolace-homepage .hs-main-nav a:not(.hs-nav-cta)::after{display:none}
+  .hersolace-homepage .hs-main-nav a:not(.hs-nav-cta):hover{background:color-mix(in oklab,var(--hs-plum) 8%,transparent)}
+  .hersolace-homepage .hs-main-nav a.hs-nav-cta{margin-top:.35rem;text-align:center;border-radius:9999px}
 }
-@media (max-width:360px){
-  .hersolace-homepage .hs-main-nav a{padding:.45rem .5rem;font-size:.72rem}
+@media (max-width:767px){
+  .hersolace-homepage .hs-hero-banner{min-height:auto;padding:4.5rem .75rem 1.5rem}
 }
