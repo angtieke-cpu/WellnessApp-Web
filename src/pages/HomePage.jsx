@@ -9,7 +9,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
-const logoUrl = "/hersolace-logo.jpeg";
+const heroBannerUrl = "/heroBanner.jpeg";
 const appStoreQrUrl = "/hersolace-app_store-qr.png";
 const playStoreQrUrl = "/hersolace-play_store-qr.png";
 
@@ -66,31 +66,17 @@ const GUIDANCE = [
 export default function HomePage() {
   return (
     <div className="hersolace-homepage hs-min-h-screen hs-bg-cream hs-text-ink hs-antialiased hs-selection:bg-rose/30">
-      <header className="hs-mx-auto hs-flex hs-max-w-6xl hs-items-center hs-justify-between hs-px-6 hs-pt-7">
-        <nav className="hs-hidden hs-items-center hs-gap-8 hs-text-sm hs-text-ink/70 hs-md:flex">
-          <a href="#formula" className="hs-hover:text-ink">
-            4 · 7 · 1
-          </a>
-          <a href="#about" className="hs-hover:text-ink">
-            About
-          </a>
-          <a href="#tutorial" className="hs-hover:text-ink">
-            How It Works
-          </a>
-          <a href="#beta" className="hs-hover:text-ink">
-            Beta
-          </a>
+      <header className="hs-site-header">
+        <nav className="hs-main-nav" aria-label="Main">
+          <a href="#formula">4 · 7 · 1</a>
+          <a href="#about">About</a>
+          <a href="#tutorial">How It Works</a>
+          <a href="#beta">Beta</a>
         </nav>
-        <a
-          href="#beta"
-          className="hs-rounded-full hs-border hs-border-ink/15 hs-px-4 hs-py-2 hs-text-sm hs-font-semibold hs-transition hs-hover:bg-ink hs-hover:text-cream"
-        >
-          Join the Beta
-        </a>
       </header>
 
-      <div className="hs-logo-banner" aria-label="hersolace brand banner">
-        <img src={logoUrl} alt="hersolace" />
+      <div className="hs-hero-banner">
+        <img src={heroBannerUrl} alt="HerSolace — Decode Hormones, Discover You" />
       </div>
 
       {/* HERO */}
@@ -115,12 +101,6 @@ export default function HomePage() {
               — from menarche to menopause.
             </p>
             <div className="hs-mt-8 hs-flex hs-flex-wrap hs-gap-3">
-              <a
-                href="#beta"
-                className="hs-rounded-full hs-gradient-warm hs-px-6 hs-py-3 hs-text-sm hs-font-semibold hs-text-cream hs-shadow-soft"
-              >
-                Join the Beta
-              </a>
               <a
                 href="#tutorial"
                 className="hs-rounded-full hs-border hs-border-ink/15 hs-px-6 hs-py-3 hs-text-sm hs-font-semibold hs-hover:bg-ink/5"
@@ -510,20 +490,12 @@ export default function HomePage() {
       <footer className="hs-mx-auto hs-flex hs-max-w-6xl hs-flex-col hs-items-center hs-justify-between hs-gap-4 hs-border-t hs-border-ink/10 hs-px-6 hs-pt-8 hs-pb-12 hs-text-xs hs-text-ink/45 hs-sm:flex-row">
          <span className="hs-font-display hs-text-base hs-text-ink/70">hersolace</span>
         <span>Decode hormones. Discover you. · Menarche to menopause.</span>
-        <span className="hs-flex hs-gap-5">
-          <a href="#formula" className="hs-hover:text-ink">
-            4 · 7 · 1
-          </a>
-          <a href="#about" className="hs-hover:text-ink">
-            About
-          </a>
-          <a href="#tutorial" className="hs-hover:text-ink">
-            Tutorial
-          </a>
-          <a href="#beta" className="hs-hover:text-ink">
-            Beta
-          </a>
-        </span>
+        <nav className="hs-footer-nav" aria-label="Footer">
+          <a href="#formula">4 · 7 · 1</a>
+          <a href="#about">About</a>
+          <a href="#tutorial">How It Works</a>
+          <a href="#beta">Beta</a>
+        </nav>
       </footer>
     </div>
   );
