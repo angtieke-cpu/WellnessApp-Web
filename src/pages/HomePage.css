@@ -309,6 +309,24 @@
 .hersolace-homepage .hs-footer-nav a:hover{color:var(--hs-ink)}
 .hersolace-homepage .hs-footer-nav a:hover::after{transform:scaleX(1)}
 
+/* Beta download card */
+.hersolace-homepage .hs-download-card{
+  position:relative;max-width:20rem;margin:2rem auto 0;padding:1.5rem;
+  border-radius:1.25rem;background:#fff;
+  border:1px solid color-mix(in oklab,var(--hs-ink) 10%,transparent);
+  box-shadow:var(--hs-shadow-soft);
+}
+.hersolace-homepage .hs-download-card img{width:100%;max-width:11rem;height:auto;aspect-ratio:1/1;margin:0 auto}
+.hersolace-homepage .hs-download-buttons{display:flex;flex-direction:column;gap:.6rem;margin-top:1.25rem}
+.hersolace-homepage .hs-download-btn{
+  display:block;padding:.75rem 1.25rem;border-radius:9999px;
+  background:var(--hs-gradient-warm);color:var(--hs-cream);
+  font-size:.875rem;font-weight:600;
+  box-shadow:0 10px 24px -12px color-mix(in oklab,var(--hs-coral) 60%,transparent);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.hersolace-homepage .hs-download-btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px -12px color-mix(in oklab,var(--hs-coral) 70%,transparent)}
+
 @media (max-width:767px){
   .hersolace-homepage .hs-site-header{padding:.75rem 1rem}
   .hersolace-homepage .hs-main-nav a{padding:.45rem .8rem;font-size:.8rem}
