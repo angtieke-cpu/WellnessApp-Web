@@ -117,7 +117,7 @@ export default function HomePage() {
             <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
               AI-powered women’s hormonal wellness and longevity platform
             </p>
-            <h1 className="hs-mt-5 hs-font-display hs-text-[3.4rem] hs-leading-[1.02] hs-tracking-tight">
+            <h1 className="hs-hero-title hs-mt-5 hs-font-display hs-text-[3.4rem] hs-leading-[1.02] hs-tracking-tight">
               <span className="hs-text-plum">Decode Hormones.</span>
               <br />
               <span className="hs-italic hs-text-coral">Discover You.</span>
@@ -126,36 +126,19 @@ export default function HomePage() {
               Personalized nutrition, movement, sleep and longevity guidance shaped by your hormones
               — from menarche to menopause.
             </p>
-            <div className="hs-mt-8 hs-flex hs-flex-wrap hs-gap-3">
-              <a
-                href="#tutorial"
-                className="hs-rounded-full hs-border hs-border-ink/15 hs-px-6 hs-py-3 hs-text-sm hs-font-semibold hs-hover:bg-ink/5"
-              >
-                See How It Works
-              </a>
+            <div id="about" className="hs-hero-about">
+              <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
+                About
+              </p>
+              <h2 className="hs-mt-3 hs-font-display hs-text-3xl hs-leading-tight hs-tracking-tight hs-text-plum">
+                Why hersolace exists
+              </h2>
+              <p className="hs-mt-4 hs-max-w-md hs-leading-relaxed hs-text-ink/65">
+                Hormones shift across the month, changing how your body responds to food, movement,
+                stress and sleep. hersolace turns that biology into personal guidance, so you can
+                understand your patterns instead of guessing.
+              </p>
             </div>
-            <a
-              href="#formula"
-              className="hs-group hs-mt-9 hs-inline-flex hs-flex-wrap hs-items-center hs-gap-x-3 hs-gap-y-2 hs-rounded-full hs-border hs-border-ink/12 hs-bg-cream/70 hs-px-4 hs-py-2.5 hs-text-xs hs-backdrop-blur hs-transition hs-hover:border-coral/40 hs-hover:bg-cream"
-            >
-              <span className="hs-flex hs-items-center hs-gap-1.5">
-                <span className="hs-font-display hs-text-base">4</span>
-                <span className="hs-text-ink/55">life phases</span>
-              </span>
-              <span className="hs-h-3.5 hs-w-px hs-bg-ink/15" aria-hidden="true" />
-              <span className="hs-flex hs-items-center hs-gap-1.5">
-                <span className="hs-font-display hs-text-base">7</span>
-                <span className="hs-text-ink/55">deep-guidance tracks</span>
-              </span>
-              <span className="hs-h-3.5 hs-w-px hs-bg-ink/15" aria-hidden="true" />
-              <span className="hs-flex hs-items-center hs-gap-1.5">
-                <span className="hs-font-display hs-text-base">1</span>
-                <span className="hs-text-ink/55">AI model · SOL</span>
-              </span>
-              <span className="hs-font-semibold hs-text-coral hs-transition hs-group-hover:translate-x-0.5">
-                See the idea →
-              </span>
-            </a>
           </div>
 
           <div className="hs-relative">
@@ -365,26 +348,6 @@ export default function HomePage() {
               <span className="hs-gradient-text-sol hs-font-display hs-text-2xl">1</span> answer that is yours
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* ABOUT US */}
-      <section id="about" className="hs-border-y hs-border-ink/10">
-        <div className="hs-mx-auto hs-max-w-6xl hs-px-6 hs-py-24">
-          <div className="hs-mx-auto hs-max-w-2xl hs-text-center">
-            <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
-              About
-            </p>
-            <h2 className="hs-mt-3 hs-font-display hs-text-4xl hs-leading-tight hs-tracking-tight hs-text-plum">
-               Why hersolace exists
-            </h2>
-            <p className="hs-mt-5 hs-leading-relaxed hs-text-ink/65">
-               Hormones shift across the month, changing how your body responds to food, movement,
-               stress and sleep. hersolace turns that biology into personal guidance, so you can
-               understand your patterns instead of guessing.
-            </p>
-          </div>
-
         </div>
       </section>
 
