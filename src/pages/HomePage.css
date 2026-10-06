@@ -328,6 +328,25 @@
 .hersolace-homepage .hs-footer-nav a:hover{color:var(--hs-ink)}
 .hersolace-homepage .hs-footer-nav a:hover::after{transform:scaleX(1)}
 
+/* Footer: brand row + copyright/legal row */
+.hersolace-homepage .hs-site-footer{border-top:1px solid color-mix(in oklab,var(--hs-ink) 10%,transparent)}
+.hersolace-homepage .hs-footer-bottom{
+  max-width:72rem;margin:1.5rem auto 0;padding:1.25rem 1.5rem 2rem;
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;
+  border-top:1px solid color-mix(in oklab,var(--hs-ink) 6%,transparent);
+  font-size:.75rem;color:color-mix(in oklab,var(--hs-ink) 50%,transparent);
+}
+.hersolace-homepage .hs-footer-legal{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem}
+.hersolace-homepage .hs-footer-legal a{
+  font-weight:600;color:color-mix(in oklab,var(--hs-ink) 65%,transparent);
+  text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;
+  transition:color .2s ease,text-decoration-color .2s ease;
+}
+.hersolace-homepage .hs-footer-legal a:hover{color:var(--hs-plum);text-decoration-color:var(--hs-coral)}
+@media (min-width:768px){
+  .hersolace-homepage .hs-footer-bottom{flex-direction:row;justify-content:space-between;text-align:left}
+}
+
 /* Beta download card */
 .hersolace-homepage .hs-download-card{
   position:relative;max-width:20rem;margin:2rem auto 0;padding:1.5rem;
