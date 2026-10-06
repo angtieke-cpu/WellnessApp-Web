@@ -96,10 +96,10 @@ export default function HomePage() {
         <div className="hs-glow hs-absolute hs-inset-0 hs--z-10" />
         <div
           className="hs-absolute hs-top-[-18%] hs-right-[-10%] hs--z-10 hs-size-96 hs-rounded-full hs-opacity-60 hs-blur-3xl"
-          style={{ background: "var(--amber)" }}
+          style={{ background: "var(--hs-amber)" }}
         />
         <div className="hs-grid hs-items-center hs-gap-12 hs-lg:grid-cols-[1.05fr_.95fr]">
-          <div>
+          <div className="hs-hero-copy">
             <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
               AI-powered women’s hormonal wellness and longevity platform
             </p>
@@ -149,7 +149,7 @@ export default function HomePage() {
               className="hs-absolute hs--inset-4 hs--z-10 hs-rounded-[2rem] hs-opacity-70 hs-blur-2xl"
               style={{
                 background:
-                  "radial-gradient(circle at 40% 30%, color-mix(in oklab, var(--rose) 50%, transparent), color-mix(in oklab, var(--amber) 20%, transparent))",
+                  "radial-gradient(circle at 40% 30%, color-mix(in oklab, var(--hs-rose) 50%, transparent), color-mix(in oklab, var(--hs-amber) 20%, transparent))",
               }}
             />
             <div className="hs-rounded-[1.75rem] hs-border hs-border-cream/60 hs-bg-cream/90 hs-p-5 hs-shadow-soft hs-sm:p-6">
@@ -208,7 +208,7 @@ export default function HomePage() {
         <div className="hs-sol-glow hs-pointer-events-none hs-absolute hs-inset-0" aria-hidden="true" />
         <div
           className="hs-pointer-events-none hs-absolute hs--top-32 hs-left-1/2 hs-size-[34rem] hs--translate-x-1/2 hs-rounded-full hs-opacity-25 hs-blur-3xl"
-          style={{ background: "radial-gradient(circle, var(--plum), transparent 65%)" }}
+          style={{ background: "radial-gradient(circle, var(--hs-plum), transparent 65%)" }}
           aria-hidden="true"
         />
 
@@ -357,7 +357,7 @@ export default function HomePage() {
       {/* ABOUT US */}
       <section id="about" className="hs-border-y hs-border-ink/10 hs-bg-sand/30">
         <div className="hs-mx-auto hs-max-w-6xl hs-px-6 hs-py-24">
-          <div className="hs-max-w-xl">
+          <div className="hs-mx-auto hs-max-w-2xl hs-text-center">
             <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
               About
             </p>
@@ -455,7 +455,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="hs-mx-auto hs-flex hs-max-w-6xl hs-flex-col hs-items-center hs-justify-between hs-gap-4 hs-border-t hs-border-ink/10 hs-px-6 hs-pt-8 hs-pb-12 hs-text-xs hs-text-ink/45 hs-sm:flex-row">
+      <footer className="hs-mx-auto hs-flex hs-max-w-6xl hs-flex-col hs-items-center hs-justify-between hs-gap-4 hs-border-t hs-border-ink/10 hs-px-6 hs-pt-8 hs-pb-12 hs-text-center hs-text-xs hs-text-ink/45 hs-md:flex-row">
          <span className="hs-font-display hs-text-base hs-text-ink/70">hersolace</span>
         <span>Decode hormones. Discover you. · Menarche to menopause.</span>
         <nav className="hs-footer-nav" aria-label="Footer">
