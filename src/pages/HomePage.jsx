@@ -377,47 +377,6 @@ export default function HomePage() {
               Profile — plus the 30-second Daily Check-In that feeds your central AI model and
               makes every insight personal.
             </p>
-            <ul className="hs-mt-7 hs-space-y-3 hs-text-sm">
-              {[
-                [
-                  "Home — Cycle Ring & Today's Decode",
-                  "your cycle ring, today's hormone decode, and customisable energy & mood insights mapped to your cycle phase — plus shareable profile.",
-                  "var(--amber)",
-                ],
-                [
-                  "Calendar — Period Tracker",
-                  "log your period, track the cycle, and see your full period history.",
-                  "var(--coral)",
-                ],
-                [
-                  "AI — Ask Anything",
-                  "cycle-related questions and personal guidance, on demand.",
-                  "var(--rose)",
-                ],
-                [
-                  "Journal — Symptoms & Plans",
-                  "log symptoms and plan your day around your cycle.",
-                  "var(--plum)",
-                ],
-                [
-                  "Profile — You, Your Way",
-                  "your cycle details, privacy controls and settings.",
-                  "var(--coral)",
-                ],
-              ].map(([title, body, color], i) => (
-                <li key={title} className="hs-flex hs-gap-3">
-                  <span
-                    className="hs-mt-0.5 hs-grid hs-size-5 hs-shrink-0 hs-place-items-center hs-rounded-full hs-text-[10px] hs-text-cream"
-                    style={{ background: color }}
-                  >
-                    {i + 1}
-                  </span>
-                  <span>
-                    <span className="hs-font-semibold">{title}</span> — {body}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="hs-relative hs-overflow-hidden hs-rounded-[1.75rem] hs-gradient-dusk hs-shadow-soft">
