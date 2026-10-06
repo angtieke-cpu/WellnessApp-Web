@@ -78,21 +78,18 @@ export default function HomePage() {
 
   return (
     <div className="hersolace-homepage hs-min-h-screen hs-bg-cream hs-text-ink hs-antialiased hs-selection:bg-rose/30">
-      <header className="hs-site-header">
+      <header id="home" className="hs-hero-banner">
         <nav className="hs-main-nav" aria-label="Main">
-          <a href="#formula">4 · 7 · 1</a>
+          <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#tutorial">How It Works</a>
-          <a href="#beta">Beta</a>
+          <a href="#beta" className="hs-nav-cta">Join Beta</a>
         </nav>
+        <img src={heroBannerUrl} alt="HerSolace — Decode Hormones, Discover You" />
       </header>
 
-      <div className="hs-hero-banner">
-        <img src={heroBannerUrl} alt="HerSolace — Decode Hormones, Discover You" />
-      </div>
-
       {/* HERO */}
-      <section className="hs-relative hs-mx-auto hs-max-w-6xl hs-overflow-hidden hs-px-6 hs-pb-24">
+      <section className="hs-relative hs-mx-auto hs-max-w-6xl hs-overflow-hidden hs-px-6 hs-pt-16 hs-pb-24">
         <div className="hs-glow hs-absolute hs-inset-0 hs--z-10" />
         <div
           className="hs-absolute hs-top-[-18%] hs-right-[-10%] hs--z-10 hs-size-96 hs-rounded-full hs-opacity-60 hs-blur-3xl"
@@ -459,10 +456,10 @@ export default function HomePage() {
          <span className="hs-font-display hs-text-base hs-text-ink/70">hersolace</span>
         <span>Decode hormones. Discover you. · Menarche to menopause.</span>
         <nav className="hs-footer-nav" aria-label="Footer">
-          <a href="#formula">4 · 7 · 1</a>
+          <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#tutorial">How It Works</a>
-          <a href="#beta">Beta</a>
+          <a href="#beta">Join Beta</a>
         </nav>
       </footer>
     </div>
