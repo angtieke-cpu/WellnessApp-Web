@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./HomePage.css";
 
 import {
@@ -432,15 +433,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="hs-mx-auto hs-flex hs-max-w-6xl hs-flex-col hs-items-center hs-justify-between hs-gap-4 hs-border-t hs-border-ink/10 hs-px-6 hs-pt-8 hs-pb-12 hs-text-center hs-text-xs hs-text-ink/45 hs-md:flex-row">
-         <span className="hs-font-display hs-text-base hs-text-ink/70">hersolace</span>
-        <span>Decode hormones. Discover you. · Menarche to menopause.</span>
-        <nav className="hs-footer-nav" aria-label="Footer">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#tutorial">How It Works</a>
-          <a href="#beta">Join Beta</a>
-        </nav>
+      <footer className="hs-site-footer">
+        <div className="hs-mx-auto hs-flex hs-max-w-6xl hs-flex-col hs-items-center hs-justify-between hs-gap-4 hs-px-6 hs-pt-8 hs-text-center hs-text-xs hs-text-ink/45 hs-md:flex-row">
+          <span className="hs-font-display hs-text-base hs-text-ink/70">hersolace</span>
+          <span>Decode hormones. Discover you. · Menarche to menopause.</span>
+          <nav className="hs-footer-nav" aria-label="Footer">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#tutorial">How It Works</a>
+            <a href="#beta">Join Beta</a>
+          </nav>
+        </div>
+        <div className="hs-footer-bottom">
+          <p>© {new Date().getFullYear()} hersolace. All rights reserved.</p>
+          <nav className="hs-footer-legal" aria-label="Legal">
+            <Link to="/terms">Terms &amp; Conditions</Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/privacy">Privacy Policy</Link>
+          </nav>
+        </div>
       </footer>
     </div>
   );
