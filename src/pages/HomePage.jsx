@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./HomePage.css";
 
 import {
@@ -73,28 +74,44 @@ const GUIDANCE = [
   { label: "Skin & hair care", icon: Sparkles },
 ];
 
+const NAV_LINKS = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "How It Works", href: "#tutorial" },
+  { label: "Join Beta", href: "#beta", cta: true },
+];
+
 export default function HomePage() {
   const store = getStoreForDevice();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="hersolace-homepage hs-min-h-screen hs-bg-cream hs-text-ink hs-antialiased hs-selection:bg-rose/30">
       <header id="home" className="hs-hero-banner">
-        <nav className="hs-main-nav" aria-label="Main">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#tutorial">How It Works</a>
-          <a href="#beta" className="hs-nav-cta">Join Beta</a>
+        <button
+          type="button"
+          className={`hs-menu-toggle${menuOpen ? " is-open" : ""}`}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="hs-main-nav"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav id="hs-main-nav" className={`hs-main-nav${menuOpen ? " is-open" : ""}`} aria-label="Main">
+          {NAV_LINKS.map(({ label, href, cta }) => (
+            <a key={href} href={href} className={cta ? "hs-nav-cta" : undefined} onClick={() => setMenuOpen(false)}>
+              {label}
+            </a>
+          ))}
         </nav>
         <img src={heroBannerUrl} alt="HerSolace — Decode Hormones, Discover You" />
       </header>
 
       {/* HERO */}
       <section className="hs-relative hs-mx-auto hs-max-w-6xl hs-overflow-hidden hs-px-6 hs-pt-16 hs-pb-24">
-        <div className="hs-glow hs-absolute hs-inset-0 hs--z-10" />
-        <div
-          className="hs-absolute hs-top-[-18%] hs-right-[-10%] hs--z-10 hs-size-96 hs-rounded-full hs-opacity-60 hs-blur-3xl"
-          style={{ background: "var(--hs-amber)" }}
-        />
         <div className="hs-grid hs-items-center hs-gap-12 hs-lg:grid-cols-[1.05fr_.95fr]">
           <div className="hs-hero-copy">
             <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
@@ -352,7 +369,7 @@ export default function HomePage() {
       </section>
 
       {/* ABOUT US */}
-      <section id="about" className="hs-border-y hs-border-ink/10 hs-bg-sand/30">
+      <section id="about" className="hs-border-y hs-border-ink/10">
         <div className="hs-mx-auto hs-max-w-6xl hs-px-6 hs-py-24">
           <div className="hs-mx-auto hs-max-w-2xl hs-text-center">
             <p className="hs-text-xs hs-font-semibold hs-uppercase hs-tracking-[0.22em] hs-text-coral">
