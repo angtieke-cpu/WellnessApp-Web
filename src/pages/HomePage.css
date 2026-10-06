@@ -252,5 +252,66 @@
 /* Typography refinements */
 .hersolace-homepage h1,.hersolace-homepage h2,.hersolace-homepage h3,.hersolace-homepage .hs-font-display{font-family:"Fraunces",ui-serif,Georgia,serif;font-synthesis:none}
 .hersolace-homepage p,.hersolace-homepage li,.hersolace-homepage a,.hersolace-homepage span{font-family:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-.hersolace-homepage img{display:block;width:15%}
+.hersolace-homepage img{display:block}
 
+/* Header menu */
+.hersolace-homepage .hs-site-header{
+  position:sticky;top:0;z-index:50;
+  display:flex;justify-content:center;
+  padding:1rem 1.5rem;
+  background:color-mix(in oklab,var(--hs-cream) 85%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid color-mix(in oklab,var(--hs-ink) 8%,transparent);
+}
+.hersolace-homepage .hs-main-nav{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem;
+  padding:.3rem;border-radius:9999px;
+  background:#fff;
+  border:1px solid color-mix(in oklab,var(--hs-ink) 10%,transparent);
+  box-shadow:0 6px 20px -12px color-mix(in oklab,var(--hs-plum) 45%,transparent);
+}
+.hersolace-homepage .hs-main-nav a{
+  padding:.5rem 1.1rem;border-radius:9999px;
+  font-size:.875rem;font-weight:600;line-height:1.25rem;letter-spacing:.01em;
+  color:color-mix(in oklab,var(--hs-ink) 75%,transparent);
+  transition:background-color .2s ease,color .2s ease;
+}
+.hersolace-homepage .hs-main-nav a:hover,
+.hersolace-homepage .hs-main-nav a:focus-visible{
+  background:color-mix(in oklab,var(--hs-plum) 10%,transparent);
+  color:var(--hs-plum);outline:none;
+}
+.hersolace-homepage .hs-main-nav a:active{background:var(--hs-plum);color:var(--hs-cream)}
+
+/* Hero banner image */
+.hersolace-homepage .hs-hero-banner{
+  display:flex;justify-content:center;
+  max-width:72rem;margin:0 auto;padding:2rem 1.5rem 1rem;
+}
+.hersolace-homepage .hs-hero-banner img{
+  width:100%;max-width:560px;height:auto;
+  aspect-ratio:925/380;object-fit:contain;
+  mix-blend-mode:multiply; /* blends the image's white background into the cream page */
+}
+
+/* Footer menu */
+.hersolace-homepage .hs-footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.25rem}
+.hersolace-homepage .hs-footer-nav a{
+  position:relative;padding:.25rem 0;
+  font-size:.8rem;font-weight:600;
+  color:color-mix(in oklab,var(--hs-ink) 60%,transparent);
+  transition:color .2s ease;
+}
+.hersolace-homepage .hs-footer-nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;
+  background:var(--hs-coral);transform:scaleX(0);transition:transform .2s ease;
+}
+.hersolace-homepage .hs-footer-nav a:hover{color:var(--hs-ink)}
+.hersolace-homepage .hs-footer-nav a:hover::after{transform:scaleX(1)}
+
+@media (max-width:767px){
+  .hersolace-homepage .hs-site-header{padding:.75rem 1rem}
+  .hersolace-homepage .hs-main-nav a{padding:.45rem .8rem;font-size:.8rem}
+  .hersolace-homepage .hs-hero-banner{padding:1.5rem 1rem .5rem}
+  .hersolace-homepage .hs-hero-banner img{max-width:340px}
+}
