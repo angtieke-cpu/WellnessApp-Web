@@ -15,15 +15,12 @@ const downloadQrUrl = "/bothQr.jpeg";
 const APP_STORE = { name: "App Store", href: "https://apps.apple.com/in/app/hersolace/id6767090399" };
 const PLAY_STORE = { name: "Play Store", href: "https://play.google.com/store/apps/details?id=com.wellness.hersolace" };
 
-// iPhone/iPad visitors see only App Store, Android only Play Store; desktop sees both.
-function getStoresForDevice() {
-  if (typeof navigator === "undefined") return [APP_STORE, PLAY_STORE];
+// Apple devices (iPhone, iPad, Mac) get the App Store; everything else gets the Play Store.
+function getStoreForDevice() {
+  if (typeof navigator === "undefined") return PLAY_STORE;
   const ua = navigator.userAgent || "";
-  const isIOS =
-    /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  if (isIOS) return [APP_STORE];
-  if (/Android/i.test(ua)) return [PLAY_STORE];
-  return [APP_STORE, PLAY_STORE];
+  const isApple = /iPhone|iPad|iPod|Macintosh|Mac OS X/i.test(ua) && !/Android/i.test(ua);
+  return isApple ? APP_STORE : PLAY_STORE;
 }
 
 
@@ -77,7 +74,7 @@ const GUIDANCE = [
 ];
 
 export default function HomePage() {
-  const stores = getStoresForDevice();
+  const store = getStoreForDevice();
 
   return (
     <div className="hersolace-homepage hs-min-h-screen hs-bg-cream hs-text-ink hs-antialiased hs-selection:bg-rose/30">
@@ -444,11 +441,9 @@ export default function HomePage() {
              <p className="hs-mt-3 hs-text-sm hs-font-semibold">Scan to download</p>
              <p className="hs-mt-1 hs-text-[11px] hs-text-ink/50">Works on iPhone and Android</p>
              <div className="hs-download-buttons">
-               {stores.map(({ name, href }) => (
-                 <a key={name} href={href} target="_blank" rel="noreferrer" className="hs-download-btn">
-                   Download on {name}
-                 </a>
-               ))}
+               <a href={store.href} target="_blank" rel="noreferrer" className="hs-download-btn">
+                 Download on {store.name}
+               </a>
              </div>
            </div>
            <p className="hs-relative hs-mt-7 hs-text-sm hs-text-ink/65">
