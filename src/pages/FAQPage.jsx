@@ -73,10 +73,10 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = null }) 
                 {isOpen && (
                   <div className="hs-faq-panel" id={panelId} role="region" aria-label={`${faq.title} answer`}>
                     <div className="hs-faq-answer">
-                      <span className="hs-faq-answer-label">WHAT MIGHT HELP</span>
+                      {/* <span className="hs-faq-answer-label">WHAT MIGHT HELP</span> */}
                       <h4>{faq.tip}</h4>
                       <p>{faq.answer}</p>
-                      <p className="hs-faq-reminder">Today is a moment, not your whole story. ♡</p>
+                      {/* <p className="hs-faq-reminder">Today is a moment, not your whole story. ♡</p> */}
                       <a className="hs-faq-download" href={downloadUrl}>
                         Download HerSolace <span aria-hidden="true">↗</span>
                       </a>
