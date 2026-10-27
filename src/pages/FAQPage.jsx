@@ -29,11 +29,11 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
         <a href="/HomePage" className="hs-faq-brand" aria-label="HerSolace home">
           {logoSrc ? <img src={logoSrc} alt="HerSolace" /> : <span>Her<span className="hs-faq-brand-accent">Solace</span></span>}
         </a>
-        <a className="hs-faq-header-link" href="/HomePage">Back to Home <span aria-hidden="true">↗</span></a>
+        <a className="hs-faq-header-link" href="/HomePage">Back to Home <span aria-hidden="true">&#8962;</span></a>
       </header>
 
       <section className="hs-faq-hero" aria-labelledby="hs-faq-title">
-        <span className="hs-faq-eyebrow">FEEL IT. FLIP IT. TAKE IT WITH YOU.</span>
+        {/* <span className="hs-faq-eyebrow">FEEL IT. FLIP IT. TAKE IT WITH YOU.</span> */}
         <h1 id="hs-faq-title">How are you <em>feeling</em> today?</h1>
         <p>Whatever your day feels like, there's a gentle next step. Explore these little reminders, one feeling at a time.</p>
         <div className="hs-faq-count">✦ &nbsp; 10 gentle wellness reminders</div>
@@ -45,7 +45,7 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
             <span className="hs-faq-kicker">YOUR WELLNESS CORNER</span>
             <h2>Find your little moment of calm</h2>
           </div>
-          <p>Tap a card to see what might help.</p>
+          {/* <p>Tap a card to see what might help.</p> */}
         </div>
 
         <div className="hs-faq-list">
