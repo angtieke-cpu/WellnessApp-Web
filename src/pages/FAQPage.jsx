@@ -55,70 +55,69 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
             const panelId = `hs-faq-panel-${faq.id}`;
             return (
               
+
 <article
-  className={`hs-faq-card hs-faq-flip-card ${isOpen ? "is-open" : ""}`}
+  className={`hs-faq-card ${isOpen ? "is-open" : ""}`}
   key={faq.id}
 >
-  <div className="hs-faq-flip-inner">
-
-    {/* FRONT */}
-    <div className="hs-faq-flip-front">
-      <h3 className="hs-faq-card-heading">
-        <button
-          type="button"
-          className="hs-faq-trigger"
-          aria-expanded={isOpen}
-          aria-controls={panelId}
-          onClick={() => setOpenId(isOpen ? null : faq.id)}
-        >
-          <span className="hs-faq-number">
-            {String(faq.id).padStart(2, "0")}
-          </span>
-
-          <span className="hs-faq-trigger-copy">
-            <span className="hs-faq-topic">
-              {faq.title}
-            </span>
-            <span className="hs-faq-question">
-              {faq.question}
-            </span>
-          </span>
-
-          <span className="hs-faq-flip-icon" aria-hidden="true">
-            ↗
-          </span>
-        </button>
-      </h3>
-    </div>
-
-    {/* BACK */}
-    <div
-      className="hs-faq-flip-back"
-      id={panelId}
-      aria-hidden={!isOpen}
-      inert={!isOpen}
+  <h3 className="hs-faq-card-heading">
+    <button
+      type="button"
+      className="hs-faq-trigger"
+      aria-expanded={isOpen}
+      aria-controls={panelId}
+      onClick={() => setOpenId(isOpen ? null : faq.id)}
     >
-      <div className="hs-faq-flip-back-content">
-        <span className="hs-faq-topic">{faq.title}</span>
+      <span className="hs-faq-number">
+        {String(faq.id).padStart(2, "0")}
+      </span>
+
+      <span className="hs-faq-trigger-copy">
+        <span className="hs-faq-topic">
+          {faq.title}
+        </span>
+        <span className="hs-faq-question">
+          {faq.question}
+        </span>
+      </span>
+
+      <span
+        className={`hs-faq-chevron ${isOpen ? "rotated" : ""}`}
+        aria-hidden="true"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </span>
+    </button>
+  </h3>
+
+  <div
+    className={`hs-faq-accordion ${isOpen ? "expanded" : ""}`}
+    id={panelId}
+    aria-hidden={!isOpen}
+    inert={!isOpen}
+  >
+    <div className="hs-faq-accordion-inner">
+      <div className="hs-faq-answer">
         <h4>{faq.tip}</h4>
         <p>{faq.answer}</p>
 
-        <div className="hs-faq-flip-actions">
-          <a className="hs-faq-download" href={downloadUrl}>
-            Download HerSolace <span aria-hidden="true">↗</span>
-          </a>
-
-          <button
-            type="button"
-            className="hs-faq-flip-back-btn"
-            onClick={() => setOpenId(null)}
-          >
-            <span aria-hidden="true">↶</span> Back
-          </button>
-        </div>
+        <a className="hs-faq-download" href={downloadUrl}>
+          Download HerSolace
+          <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
-
   </div>
 </article>
 
