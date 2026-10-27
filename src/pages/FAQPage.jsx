@@ -3,7 +3,7 @@ import './FAQPage.css';
 
 // Change this only if your existing download page uses a different route.
 const DOWNLOAD_URL = '/download';
-
+const logo_Src = "/heroBanner.jpeg";
 const faqs = [
   { id: 1, title: 'Low Battery', question: 'I have things to do, but no energy to do them.', tip: 'Make it smaller.', answer: 'Drink some water, take a short break and start with one small task.' },
   { id: 2, title: 'Brain Fog', question: 'My brain has too many tabs open.', tip: 'Clear one tab.', answer: 'Write down your next step, silence distractions and focus on one thing.' },
@@ -17,7 +17,7 @@ const faqs = [
   { id: 10, title: 'Full of Energy', question: 'Today, I feel ready to take on the world.', tip: 'Use your spark wisely.', answer: 'Tackle a meaningful priority, enjoy the momentum and remember to take breaks.' },
 ];
 
-export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = null }) {
+export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src }) {
   const [openId, setOpenId] = useState(null);
 
   return (
