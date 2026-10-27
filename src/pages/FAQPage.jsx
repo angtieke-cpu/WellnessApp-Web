@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './FAQPage.css';
+import { Link } from "react-router-dom";
 
 // Change this only if your existing download page uses a different route.
 const DOWNLOAD_URL = '/download';
