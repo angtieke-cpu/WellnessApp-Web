@@ -93,6 +93,14 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
         <div className="hs-faq-footer-brand">HerSolace</div>
         <p>Decode hormones. Discover you. · Menarche to menopause.</p>
         <small>Gentle wellness prompts, not medical diagnosis or advice.</small>
+          <div className="hs-footer-bottom">
+          <p>© {new Date().getFullYear()} hersolace. All rights reserved.</p>
+          <nav className="hs-footer-legal" aria-label="Legal">
+            <Link to="/terms">Terms &amp; Conditions</Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/privacy">Privacy Policy</Link>
+          </nav>
+        </div>
       </footer>
     </main>
   );
