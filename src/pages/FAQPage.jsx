@@ -91,7 +91,7 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
 
       <footer className="hs-faq-footer">
         <div className="hs-faq-footer-brand">HerSolace</div>
-        <p>Decode Hormones. Discover You.</p>
+        <p>Decode hormones. Discover you. · Menarche to menopause.</p>
         <small>Gentle wellness prompts, not medical diagnosis or advice.</small>
       </footer>
     </main>
