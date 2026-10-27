@@ -62,3 +62,145 @@
 @media (min-width:768px){
   .hersolace-homepage .hs-footer-bottom{flex-direction:row;justify-content:space-between;text-align:left}
 }
+
+/* FAQ 3D Flip Card */
+.hs-faq-flip-card {
+  perspective: 1200px;
+  overflow: visible;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  position: relative;
+}
+
+.hs-faq-flip-card.is-open {
+  border: none;
+  box-shadow: none;
+}
+
+.hs-faq-flip-inner {
+  position: relative;
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.65s ease;
+}
+
+.hs-faq-flip-card.is-open .hs-faq-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.hs-faq-flip-front,
+.hs-faq-flip-back {
+  grid-area: 1 / 1;
+  min-width: 0;
+  min-height: 140px;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid #eee1f1;
+  box-shadow: 0 8px 26px rgba(84,43,107,.045);
+}
+
+.hs-faq-flip-front {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,.96);
+}
+
+.hs-faq-flip-front .hs-faq-card-heading {
+  width: 100%;
+}
+
+.hs-faq-flip-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg,#fff5fb,#f4eaff);
+  border-color: #e6bfdf;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+}
+
+.hs-faq-flip-back-content {
+  width: 100%;
+}
+
+.hs-faq-flip-back h4 {
+  font-size: 23px;
+  color: var(--hs-purple);
+  margin: 8px 0;
+}
+
+.hs-faq-flip-back p {
+  font-size: 16px;
+  color: #5b5062;
+  margin: 0 0 18px;
+}
+
+.hs-faq-flip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 100px;
+  background: #f8eff8;
+  color: var(--hs-purple);
+  font-size: 13px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.hs-faq-flip-label span {
+  font-size: 20px;
+}
+
+.hs-faq-flip-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hs-faq-flip-back-btn {
+  border: 1px solid #dfc7e5;
+  border-radius: 100px;
+  background: white;
+  color: var(--hs-purple);
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hs-faq-flip-back-btn:hover {
+  background: #f8eff8;
+}
+
+@media (max-width: 640px) {
+  .hs-faq-flip-front,
+  .hs-faq-flip-back {
+    min-height: 165px;
+  }
+
+  .hs-faq-flip-back {
+    padding: 20px;
+  }
+
+  .hs-faq-flip-back h4 {
+    font-size: 20px;
+  }
+
+  .hs-faq-flip-back p {
+    font-size: 14px;
+  }
+
+  .hs-faq-flip-label {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-faq-flip-inner {
+    transition: none;
+  }
+}
