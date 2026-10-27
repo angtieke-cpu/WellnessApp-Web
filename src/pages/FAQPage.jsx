@@ -56,11 +56,12 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
             return (
               
 <article
-  className={`hs-faq-card hs-faq-flip-card ${isOpen ? 'is-open' : ''}`}
+  className={`hs-faq-card hs-faq-flip-card ${isOpen ? "is-open" : ""}`}
   key={faq.id}
 >
   <div className="hs-faq-flip-inner">
-    {/* FRONT SIDE */}
+
+    {/* FRONT */}
     <div className="hs-faq-flip-front">
       <h3 className="hs-faq-card-heading">
         <button
@@ -71,22 +72,26 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
           onClick={() => setOpenId(isOpen ? null : faq.id)}
         >
           <span className="hs-faq-number">
-            {String(faq.id).padStart(2, '0')}
+            {String(faq.id).padStart(2, "0")}
           </span>
 
           <span className="hs-faq-trigger-copy">
-            <span className="hs-faq-topic">{faq.title}</span>
-            <span className="hs-faq-question">{faq.question}</span>
+            <span className="hs-faq-topic">
+              {faq.title}
+            </span>
+            <span className="hs-faq-question">
+              {faq.question}
+            </span>
           </span>
 
-          <span className="hs-faq-flip-label">
-            Flip <span aria-hidden="true">↻</span>
+          <span className="hs-faq-flip-icon" aria-hidden="true">
+            ↗
           </span>
         </button>
       </h3>
     </div>
 
-    {/* BACK SIDE */}
+    {/* BACK */}
     <div
       className="hs-faq-flip-back"
       id={panelId}
@@ -100,8 +105,7 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
 
         <div className="hs-faq-flip-actions">
           <a className="hs-faq-download" href={downloadUrl}>
-            Download HerSolace
-            <span aria-hidden="true">↗</span>
+            Download HerSolace <span aria-hidden="true">↗</span>
           </a>
 
           <button
@@ -109,13 +113,15 @@ export default function FAQPage({ downloadUrl = DOWNLOAD_URL, logoSrc = logo_Src
             className="hs-faq-flip-back-btn"
             onClick={() => setOpenId(null)}
           >
-            ↶ Flip Back
+            <span aria-hidden="true">↶</span> Back
           </button>
         </div>
       </div>
     </div>
+
   </div>
 </article>
+
 
             );
           })}
