@@ -46,3 +46,9 @@
 .hs-faq-footer small{font-size:11px;color:#a49aa8}
 @media(max-width:640px){.hs-faq-header{padding:18px}.hs-faq-brand{font-size:25px}.hs-faq-hero{margin:38px auto 48px}.hs-faq-hero h1{letter-spacing:-1px}.hs-faq-hero>p{font-size:15px}.hs-faq-section-heading{display:block}.hs-faq-section-heading>p{margin-top:10px}.hs-faq-content{padding:0 14px;margin-bottom:55px}.hs-faq-trigger{padding:18px 15px;gap:12px}.hs-faq-number{flex-basis:40px;width:40px;height:40px;border-radius:12px;font-size:13px}.hs-faq-question{font-size:15px}.hs-faq-topic{font-size:10px}.hs-faq-toggle{flex-basis:30px;width:30px;height:30px}.hs-faq-panel{padding:0 18px 22px 67px}.hs-faq-answer h4{font-size:20px}.hs-faq-answer>p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.hs-faq-card{transition:none}}
+.hs-footer-bottom{
+  max-width:72rem;margin:1.5rem auto 0;padding:1.25rem 1.5rem 2rem;
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;
+  border-top:1px solid color-mix(in oklab,var(--hs-ink) 6%,transparent);
+  font-size:.75rem;color:color-mix(in oklab,var(--hs-ink) 50%,transparent);
+}
