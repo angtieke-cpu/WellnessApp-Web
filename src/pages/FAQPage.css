@@ -63,26 +63,22 @@
   .hersolace-homepage .hs-footer-bottom{flex-direction:row;justify-content:space-between;text-align:left}
 }
 
-/* FAQ 3D Flip Card */
-.hs-faq-flip-card {
+/* Compact modern flip cards */
+.hs-faq-flip-card,
+.hs-faq-flip-card.is-open {
+  position: relative;
   perspective: 1200px;
   overflow: visible;
+  border: none;
   background: transparent;
-  border: none;
-  box-shadow: none;
-  position: relative;
-}
-
-.hs-faq-flip-card.is-open {
-  border: none;
   box-shadow: none;
 }
 
 .hs-faq-flip-inner {
-  position: relative;
   display: grid;
+  position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.65s ease;
+  transition: transform .55s cubic-bezier(.2,.8,.2,1);
 }
 
 .hs-faq-flip-card.is-open .hs-faq-flip-inner {
@@ -93,29 +89,67 @@
 .hs-faq-flip-back {
   grid-area: 1 / 1;
   min-width: 0;
-  min-height: 140px;
-  border-radius: 20px;
+  min-height: 94px;
+  border-radius: 16px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border: 1px solid #eee1f1;
-  box-shadow: 0 8px 26px rgba(84,43,107,.045);
+  box-shadow: 0 4px 18px rgba(84,43,107,.04);
 }
 
 .hs-faq-flip-front {
   display: flex;
   align-items: center;
-  background: rgba(255,255,255,.96);
+  background: #fff;
 }
 
 .hs-faq-flip-front .hs-faq-card-heading {
   width: 100%;
 }
 
+.hs-faq-flip-front .hs-faq-trigger {
+  padding: 15px 20px;
+  gap: 14px;
+}
+
+.hs-faq-flip-front .hs-faq-number {
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  font-size: 13px;
+}
+
+.hs-faq-flip-front .hs-faq-question {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.hs-faq-flip-front .hs-faq-topic {
+  font-size: 10px;
+}
+
+.hs-faq-flip-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  color: #a881b6;
+  font-size: 21px;
+  transition: transform .25s ease, color .25s ease;
+}
+
+.hs-faq-flip-front:hover .hs-faq-flip-icon {
+  transform: rotate(45deg);
+  color: var(--hs-pink);
+}
+
 .hs-faq-flip-back {
   transform: rotateY(180deg);
-  background: linear-gradient(135deg,#fff5fb,#f4eaff);
+  background: linear-gradient(120deg,#fff8fc,#f7f0ff);
   border-color: #e6bfdf;
-  padding: 24px 28px;
+  padding: 17px 22px;
   display: flex;
   align-items: center;
 }
@@ -125,77 +159,77 @@
 }
 
 .hs-faq-flip-back h4 {
-  font-size: 23px;
+  margin: 3px 0 5px;
+  font-size: 18px;
   color: var(--hs-purple);
-  margin: 8px 0;
 }
 
 .hs-faq-flip-back p {
-  font-size: 16px;
+  margin: 0 0 12px;
+  font-size: 14px;
   color: #5b5062;
-  margin: 0 0 18px;
-}
-
-.hs-faq-flip-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 100px;
-  background: #f8eff8;
-  color: var(--hs-purple);
-  font-size: 13px;
-  font-weight: 750;
-  white-space: nowrap;
-}
-
-.hs-faq-flip-label span {
-  font-size: 20px;
+  line-height: 1.5;
 }
 
 .hs-faq-flip-actions {
   display: flex;
   align-items: center;
+  gap: 14px;
   flex-wrap: wrap;
-  gap: 16px;
+}
+
+.hs-faq-flip-back .hs-faq-download {
+  padding: 9px 17px;
+  font-size: 12px;
+  box-shadow: none;
 }
 
 .hs-faq-flip-back-btn {
-  border: 1px solid #dfc7e5;
-  border-radius: 100px;
-  background: white;
+  border: none;
+  background: transparent;
   color: var(--hs-purple);
-  padding: 12px 18px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
+  padding: 8px;
 }
 
 .hs-faq-flip-back-btn:hover {
-  background: #f8eff8;
+  color: var(--hs-pink);
 }
 
 @media (max-width: 640px) {
   .hs-faq-flip-front,
   .hs-faq-flip-back {
-    min-height: 165px;
+    min-height: 85px;
+    border-radius: 14px;
   }
 
-  .hs-faq-flip-back {
-    padding: 20px;
+  .hs-faq-flip-front .hs-faq-trigger {
+    padding: 12px 14px;
+    gap: 11px;
   }
 
-  .hs-faq-flip-back h4 {
-    font-size: 20px;
+  .hs-faq-flip-front .hs-faq-number {
+    flex-basis: 34px;
+    width: 34px;
+    height: 34px;
   }
 
-  .hs-faq-flip-back p {
+  .hs-faq-flip-front .hs-faq-question {
     font-size: 14px;
   }
 
-  .hs-faq-flip-label {
-    padding: 6px 10px;
-    font-size: 12px;
+  .hs-faq-flip-back {
+    padding: 14px 16px;
+  }
+
+  .hs-faq-flip-back h4 {
+    font-size: 17px;
+  }
+
+  .hs-faq-flip-back p {
+    font-size: 13px;
   }
 }
 
@@ -204,3 +238,4 @@
     transition: none;
   }
 }
+
