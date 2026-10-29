@@ -219,17 +219,20 @@ export default function FAQPage({
     }
   };
 
-  const handleDecodeMore = (faq = null) => {
-    if (trackingDecode) return;
-    const questionId = faq?.id ?? null;
-    if (!leadId) {
-      pendingDecodeRef.current = questionId;
-      setFormError("");
-      setShowLeadForm(true);
-      return;
-    }
-    void completeDecode(leadId, questionId);
-  };
+const handleDecodeMore = (faq = null) => {
+  if (trackingDecode) return;
+
+  const questionId = faq?.id ?? null;
+
+  // No lead submitted: redirect directly
+  if (!leadId) {
+    window.location.href = "/download";
+    return;
+  }
+
+  // Lead exists: track click and redirect
+  void completeDecode(leadId, questionId);
+};
 
   const closeDecode = () => {
     if (!saving) {
