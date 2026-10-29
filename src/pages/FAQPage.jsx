@@ -224,15 +224,14 @@ const handleDecodeMore = (faq = null) => {
 
   const questionId = faq?.id ?? null;
 
-  // No lead submitted: redirect directly
   if (!leadId) {
-    window.location.href = "/download";
+    window.location.assign(downloadUrl);
     return;
   }
 
-  // Lead exists: track click and redirect
   void completeDecode(leadId, questionId);
 };
+
 
   const closeDecode = () => {
     if (!saving) {
@@ -247,12 +246,17 @@ const handleDecodeMore = (faq = null) => {
     const name = lead.name.trim();
     const contact = lead.contact.trim();
     // One field accepts either email or an Indian phone number.
-    const email = contact.includes("@") ? contact : "";
-    const mobileNumber = email ? "" : contact.replace(/^\+91[\s-]?/, "").replace(/\s/g, "");
+   const email = contact.includes("@") ? contact : "";
+const mobileNumber = email
+  ? ""
+  : contact.replace(/^\+91[\s-]?/, "").replace(/\s/g, "");
     // No frontend format validation; the API remains responsible for validation.
     try {
       setSaving(true);
-      const response = await faqPost("leads", { name, mobileNumber, email });
+      const response = await faqPost("leads", {
+  name,
+  contact
+});
       const id = response.data?.leadId;
       if (!id) throw new Error("Lead ID missing from API response");
       setLeadId(id);
