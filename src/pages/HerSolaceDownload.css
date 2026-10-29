@@ -396,12 +396,7 @@ body {
 .hersolace-download.hs-loading-page {
   min-height: 100vh;
   min-height: 100dvh;
-  background: linear-gradient(
-    180deg,
-    #fff0f5 0%,
-    #fff8fb 48%,
-    #ffffff 100%
-  );
+  background: #ffff;
   display: flex;
   flex-direction: column;
   align-items: center;
