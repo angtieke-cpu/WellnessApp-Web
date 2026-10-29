@@ -32,74 +32,39 @@ export default function HerSolaceDownload() {
   const [alreadyRedirected, setAlreadyRedirected] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const detectedDevice = getDeviceType();
-    setDevice(detectedDevice);
+ useEffect(() => {
+  const detectedDevice = getDeviceType();
+  setDevice(detectedDevice);
 
-    let redirected = false;
+  // Android: Redirect to Google Play Store
+  if (detectedDevice === "android") {
+    window.location.replace(GOOGLE_PLAY_LINK);
+    return;
+  }
 
-    try {
-      redirected =
-        sessionStorage.getItem(REDIRECT_KEY) === "true";
-    } catch (error) {
-      console.log("Session storage unavailable");
-    }
+  // iPhone / iPad: Redirect to Apple App Store
+  if (detectedDevice === "ios") {
+    window.location.replace(APP_STORE_LINK);
+    return;
+  }
 
-    setAlreadyRedirected(redirected);
-
-    // Automatically open the correct store only on the first visit
-    // from an iOS or Android device.
-    if (
-      (detectedDevice === "ios" || detectedDevice === "android") &&
-      !redirected
-    ) {
-      try {
-        sessionStorage.setItem(REDIRECT_KEY, "true");
-      } catch (error) {
-        console.log("Unable to save redirect state");
-      }
-
-      const storeUrl =
-        detectedDevice === "ios"
-          ? APP_STORE_LINK
-          : GOOGLE_PLAY_LINK;
-
-      window.location.replace(storeUrl);
-      return;
-    }
-
-    // Display the download page after device detection
-    setIsLoading(false);
-  }, []);
+  // Desktop: Show the normal download page
+  setIsLoading(false);
+}, []);
 
   const isMobile = device === "ios" || device === "android";
 
   const storeName = "HerSolace";
 
   const storeNote =
-    device === "ios"
-      ? alreadyRedirected
-        ? "HerSolace is available on the App Store"
-        : "Opening HerSolace in the App Store…"
-      : device === "android"
-        ? alreadyRedirected
-          ? "HerSolace is available on Google Play"
-          : "Opening HerSolace in Google Play…"
-        : "Choose your app store";
-
-  const appleButtonText =
-    device === "ios" && !alreadyRedirected
-      ? "Open App Store"
-      : device === "ios"
-        ? "Continue to App Store"
-        : "Download on the App Store";
-
-  const androidButtonText =
-    device === "android" && !alreadyRedirected
-      ? "Open Google Play"
-      : device === "android"
-        ? "Continue to Google Play"
-        : "Get it on Google Play";
+  device === "ios"
+    ? "Opening HerSolace in the App Store..."
+    : device === "android"
+      ? "Opening HerSolace in Google Play..."
+      : "Choose your app store";
+  
+const appleButtonText = "Download on the App Store";
+const androidButtonText = "Get it on Google Play";
 
   // Loading screen shown before device detection completes
 if (isLoading) {
