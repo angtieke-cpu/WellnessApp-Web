@@ -102,20 +102,31 @@ export default function HerSolaceDownload() {
         : "Get it on Google Play";
 
   // Loading screen shown before device detection completes
-  if (isLoading) {
-    return (
-      <main className="hersolace-download">
-        <div
-          className="hs-download-loading"
-          role="status"
-          aria-live="polite"
-        >
-          <div className="hs-download-spinner" />
-          <p>Opening HerSolace...</p>
-        </div>
-      </main>
-    );
-  }
+if (isLoading) {
+  return (
+    <main className="hersolace-download hs-loading-page">
+      <div className="hs-download-loading">
+        <img
+          src="/logo.png"
+          alt="HerSolace"
+          className="hs-loading-logo"
+        />
+
+        <h2>Opening HerSolace</h2>
+
+        <p>
+          {device === "ios"
+            ? "Taking you to the Apple App Store..."
+            : device === "android"
+              ? "Taking you to Google Play Store..."
+              : "Preparing your download options..."}
+        </p>
+
+        <div className="hs-download-spinner" />
+      </div>
+    </main>
+  );
+}
 
   return (
     <main className="hersolace-download">
