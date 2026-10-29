@@ -165,7 +165,7 @@ export default function FAQPage({
   };
 
   const trackEvent = (id, eventType, questionId = null) =>
-    postApi("/api/faq/track", { leadId: id, eventType, questionId });
+    postApi("/api/user/track", { leadId: id, eventType, questionId });
 
   const handleFlip = (faq) => {
     if (openId === faq.id) {
@@ -242,7 +242,7 @@ export default function FAQPage({
     }
     try {
       setSaving(true);
-      const response = await postApi("/api/faq/leads", { name, mobileNumber, email });
+      const response = await postApi("/api/user/leads", { name, mobileNumber, email });
       const id = response.data?.leadId;
       if (!id) throw new Error("Lead ID missing from API response");
       setLeadId(id);
