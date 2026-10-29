@@ -405,7 +405,7 @@ export default function FAQPage({
                 <input id="hs-lead-name" name="name" autoComplete="name" value={lead.name} onChange={(e) => setLead({ ...lead, name: e.target.value })} placeholder="Your name" />
               </div>
               <div className="hs-faq-field">
-                <input id="hs-lead-contact" name="contact" autoComplete="on" value={lead.contact} onChange={(e) => setLead({ ...lead, contact: e.target.value })} placeholder="🇮🇳 +91 Mobile number or email" />
+                <input id="hs-lead-contact" name="contact" autoComplete="on" value={lead.contact} onChange={(e) => setLead({ ...lead, contact: e.target.value })} placeholder="Mobile number or email" />
               </div>
               {formError && <p className="hs-faq-lead-error" role="alert">{formError}</p>}
               <button type="submit" className="hs-faq-decode-btn hs-faq-submit" disabled={saving || trackingDecode}>
