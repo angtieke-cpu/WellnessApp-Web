@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Self-contained FAQ page: JSX + styles in one file.
 // Public HerSolace API integration; no login token is sent.
@@ -130,6 +130,14 @@ const styles = `
 @media(max-width:640px){.hs-faq-flip-inner{height:90px}.hs-faq-flip-card.is-open .hs-faq-flip-inner{height:215px}.hs-faq-flip-front .hs-faq-trigger{padding:10px 13px}.hs-faq-flip-back{padding:12px 14px}.hs-faq-flip-back .hs-faq-answer p{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.hs-faq-flip-inner{transition:none}}
 
+/* Discover buttons: header beside the mobile menu, and below the questions. */
+.hs-faq-header-discover{position:absolute;top:15px;left:max(24px,calc((100vw - 1152px)/2));z-index:7;animation:none;padding:9px 17px;font-size:12px;min-width:0}
+.hs-faq-bottom-cta{display:flex;justify-content:center;margin-top:30px}
+.hs-faq-front-hint{font-size:10px;font-weight:700;color:#a177ad;white-space:nowrap}
+.hs-faq-flip-front .hs-faq-trigger{gap:10px}
+.hs-faq-flip-front .hs-faq-trigger-copy{min-width:0}
+@media(max-width:767px){.hs-faq-header-discover{top:12px;left:auto;right:67px;padding:9px 13px;font-size:11px}.hs-faq-front-hint{font-size:9px;max-width:57px;white-space:normal;text-align:center}}
+
 `;
 
 export default function FAQPage({
@@ -137,11 +145,10 @@ export default function FAQPage({
   logoSrc = BANNER_URL,
   apiBaseUrl = API_BASE_URL,
 }) {
-  const navigate = useNavigate();
   const [openId, setOpenId] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLeadForm, setShowLeadForm] = useState(true);
-  const [lead, setLead] = useState({ name: "", mobile: "", email: "" });
+  const [lead, setLead] = useState({ name: "", contact: "" });
   const [leadId, setLeadId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState("");
@@ -164,8 +171,12 @@ export default function FAQPage({
     return result;
   };
 
+  // The router shared by the backend exposes /leads and /track.
+  // Set the correct mount prefix here (e.g. /api/user or /api/faq).
+  const FAQ_ROUTE_PREFIX = "/api/user"; // Change if your app mounts this router elsewhere.
+  const faqPost = (endpoint, payload) => postApi(`${FAQ_ROUTE_PREFIX}/${endpoint}`, payload);
   const trackEvent = (id, eventType, questionId = null) =>
-    postApi("/api/user/track", { leadId: id, eventType, questionId });
+    faqPost("track", { leadId: id, eventType, questionId });
 
   const handleFlip = (faq) => {
     if (openId === faq.id) {
@@ -187,15 +198,13 @@ export default function FAQPage({
     if (decodeInProgressRef.current) return;
     decodeInProgressRef.current = true;
     setTrackingDecode(true);
-    setActionError("");
+    // Navigate even when analytics fail. Tracking must not block the download.
     try {
       await trackEvent(id, "decode_more_clicked", questionId);
-      navigate(downloadUrl);
     } catch (error) {
-      setActionError(`Unable to record Decode More: ${error.message}. Please try again.`);
+      console.warn("FAQ discover tracking failed:", error);
     } finally {
-      decodeInProgressRef.current = false;
-      setTrackingDecode(false);
+      window.location.assign(downloadUrl);
     }
   };
 
@@ -222,27 +231,14 @@ export default function FAQPage({
     event.preventDefault();
     setFormError("");
     const name = lead.name.trim();
-    const mobileNumber = lead.mobile.trim();
-    const email = lead.email.trim();
-    if (!name) {
-      setFormError("Enter your name.");
-      return;
-    }
-    if (!mobileNumber && !email) {
-      setFormError("Enter either a mobile number or an email address.");
-      return;
-    }
-    if (mobileNumber && !/^\d{10}$/.test(mobileNumber)) {
-      setFormError("Enter a valid 10-digit mobile number, or leave it blank.");
-      return;
-    }
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setFormError("Enter a valid email address, or leave it blank.");
-      return;
-    }
+    const contact = lead.contact.trim();
+    // One field accepts either email or an Indian phone number.
+    const email = contact.includes("@") ? contact : "";
+    const mobileNumber = email ? "" : contact.replace(/^\+91[\s-]?/, "").replace(/\s/g, "");
+    // No frontend format validation; the API remains responsible for validation.
     try {
       setSaving(true);
-      const response = await postApi("/api/user/leads", { name, mobileNumber, email });
+      const response = await faqPost("leads", { name, mobileNumber, email });
       const id = response.data?.leadId;
       if (!id) throw new Error("Lead ID missing from API response");
       setLeadId(id);
@@ -301,6 +297,7 @@ export default function FAQPage({
             </Link>
           ))}
         </nav>
+        <button type="button" className="hs-faq-header-discover hs-faq-decode-btn" onClick={() => handleDecodeMore()} disabled={trackingDecode}>Discover More</button>
         <Link className="hs-faq-banner" to={HOME_URL} aria-label="HerSolace home">
           <img src={logoSrc} alt="HerSolace — Decode Hormones, Discover You" />
         </Link>
@@ -317,11 +314,6 @@ export default function FAQPage({
         </div>
 
         {actionError && <p className="hs-faq-lead-error" role="alert">{actionError}</p>}
-        <div className="hs-faq-floating-bar">
-          <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore()}>
-            Decode More
-          </button>
-        </div>
 
         <div className="hs-faq-list">
           {faqs.map((faq) => {
@@ -343,7 +335,7 @@ export default function FAQPage({
                         <span className="hs-faq-topic">{faq.title}</span>
                         <span className="hs-faq-question">{faq.question}</span>
                       </span>
-                      
+                      <span className="hs-faq-front-hint">Tap to discover</span>
                     </button>
                   </div>
                   <div className="hs-faq-flip-back" aria-hidden={!isOpen} inert={!isOpen} onClick={(event) => { if (!event.target.closest("button, a")) setOpenId(null); }} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); setOpenId(null); } }} tabIndex={isOpen ? 0 : -1} aria-label={`Tap to flip ${faq.title} back to question`}>
@@ -354,13 +346,16 @@ export default function FAQPage({
                     <div className="hs-faq-answer">
                       <h4>{faq.tip}</h4>
                       <p>{faq.answer}</p>
-                      <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore(faq)}>Decode More</button>
+                      <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore(faq)}>Discover More</button>
                     </div>
                   </div>
                 </div>
               </article>
             );
           })}
+        </div>
+        <div className="hs-faq-bottom-cta">
+          <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore()} disabled={trackingDecode}>Discover More with HerSolace</button>
         </div>
       </section>
 
@@ -393,30 +388,19 @@ export default function FAQPage({
         >
           <div className="hs-faq-modal" role="dialog" aria-modal="true" aria-labelledby="hs-faq-modal-title">
             <button type="button" className="hs-faq-close" onClick={closeDecode} aria-label="Close form">×</button>
-            <h2 id="hs-faq-modal-title">Decode more with HerSolace</h2>
-            <p className="hs-faq-modal-intro">Share your details to explore HerSolace. You can close this popup to browse the FAQs.</p>
+            <h2 id="hs-faq-modal-title">Discover more with HerSolace</h2>
             <form className="hs-faq-lead-form" onSubmit={handleLeadSubmit}>
               <div className="hs-faq-field">
-                <label htmlFor="hs-lead-name">Full name</label>
-                <input id="hs-lead-name" name="name" autoComplete="name" required maxLength={100} value={lead.name} onChange={(e) => setLead({ ...lead, name: e.target.value })} placeholder="Enter your name" />
-              </div>
-              <p className="hs-faq-contact-hint">Enter at least one contact method — phone or email.</p>
-              <div className="hs-faq-field">
-                <label htmlFor="hs-lead-mobile">Mobile number</label>
-                <div className="hs-faq-phone-wrap">
-                  <span className="hs-faq-phone-prefix" aria-label="India country calling code">🇮🇳 +91</span>
-                  <input className="hs-faq-phone-input" id="hs-lead-mobile" name="mobile" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={10} pattern="[0-9]{10}" value={lead.mobile} onChange={(e) => setLead({ ...lead, mobile: e.target.value.replace(/\D/g, "").slice(0, 10) })} placeholder="10-digit mobile number" />
-                </div>
+                <input id="hs-lead-name" name="name" autoComplete="name" value={lead.name} onChange={(e) => setLead({ ...lead, name: e.target.value })} placeholder="Your name" />
               </div>
               <div className="hs-faq-field">
-                <label htmlFor="hs-lead-email">Email address</label>
-                <input id="hs-lead-email" name="email" type="email" autoComplete="email" maxLength={254} value={lead.email} onChange={(e) => setLead({ ...lead, email: e.target.value })} placeholder="Enter your email" />
+                <input id="hs-lead-contact" name="contact" autoComplete="on" value={lead.contact} onChange={(e) => setLead({ ...lead, contact: e.target.value })} placeholder="🇮🇳 +91 Mobile number or email" />
               </div>
               {formError && <p className="hs-faq-lead-error" role="alert">{formError}</p>}
               <button type="submit" className="hs-faq-decode-btn hs-faq-submit" disabled={saving || trackingDecode}>
                 {saving ? "Saving..." : "Continue"}
               </button>
-              <p className="hs-faq-privacy">Your details are submitted to HerSolace when you select Continue.</p>
+
             </form>
           </div>
         </div>
