@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // Self-contained FAQ page: JSX + styles in one file.
-// Provide onSaveLead to persist lead details to your own backend before navigation.
+// Public HerSolace API integration; no login token is sent.
 const HOME_URL = "/HomePage";
 const DOWNLOAD_URL = "/download";
 const BANNER_URL = "/heroBanner.jpeg";
+const API_BASE_URL = "https://api.hersolace.care";
 
 const NAV_LINKS = [
   { label: "Home", to: HOME_URL },
@@ -101,6 +102,10 @@ const styles = `
 @media(max-width:767px){.hs-faq-site-header{padding:64px 12px 16px}.hs-faq-menu-toggle{display:block;position:absolute;top:12px;right:16px;z-index:8}.hs-faq-site-nav{display:none;position:absolute;top:54px;right:14px;left:14px;background:#fff;border:1px solid #eee1f1;border-radius:15px;padding:15px;box-shadow:0 12px 30px rgba(84,43,107,.13);flex-direction:column;gap:15px;align-items:stretch}.hs-faq-site-nav.is-open{display:flex}.hs-faq-site-nav a{text-align:center}.hs-faq-hero{margin:38px auto 32px}.hs-faq-hero p{font-size:15px}.hs-faq-content{padding:0 14px;margin-bottom:55px}.hs-faq-trigger{min-height:70px;padding:12px 14px;gap:11px}.hs-faq-number{flex-basis:34px;width:34px;height:34px}.hs-faq-question{font-size:14px}.hs-faq-chevron{flex-basis:24px;width:24px}.hs-faq-answer{margin:0 14px 16px 59px;padding-top:14px}.hs-faq-answer h4{font-size:17px}.hs-faq-answer p{font-size:13px}.hs-faq-footer-bottom{flex-direction:column;text-align:center}.hs-faq-modal{padding:24px}}
 @media(prefers-reduced-motion:reduce){.hs-faq-decode-btn{animation:none}.hs-faq-card,.hs-faq-chevron,.hs-faq-accordion{transition:none}}
 
+.hs-faq-flip-hint{font-size:11px;color:#8f779c;font-weight:600}
+.hs-faq-contact-hint{margin:0;font-size:12px;color:#756b80}
+.hs-faq-flip-back{cursor:pointer}
+.hs-faq-flip-back .hs-faq-decode-btn{cursor:pointer}
 /* Compact flip cards: short fronts, left-aligned answers and no large empty area. */
 .hs-faq-flip-card{perspective:1200px;overflow:visible;background:transparent;border:0;box-shadow:none!important}
 .hs-faq-flip-inner{position:relative;height:96px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.22,.7,.25,1),height .3s ease}
@@ -125,45 +130,134 @@ const styles = `
 export default function FAQPage({
   downloadUrl = DOWNLOAD_URL,
   logoSrc = BANNER_URL,
-  onSaveLead,
+  apiBaseUrl = API_BASE_URL,
 }) {
   const navigate = useNavigate();
-  const [openId, setOpenId] = useState(null); // First FAQ stays closed initially.
+  const [openId, setOpenId] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showLeadForm, setShowLeadForm] = useState(true); // Show lead popup on initial landing.
+  const [showLeadForm, setShowLeadForm] = useState(true);
   const [lead, setLead] = useState({ name: "", mobile: "", email: "" });
+  const [leadId, setLeadId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [trackingDecode, setTrackingDecode] = useState(false);
+  const firstQuestionRef = useRef(null);
+  const pendingDecodeRef = useRef(undefined);
+  const decodeInProgressRef = useRef(false);
 
-  const openDecode = () => {
-    setFormError("");
-    setShowLeadForm(true);
+  const postApi = async (path, payload) => {
+    const response = await fetch(`${apiBaseUrl.replace(/\/$/, "")}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.success !== true) {
+      throw new Error(result.message || `Request failed (${response.status})`);
+    }
+    return result;
+  };
+
+  const trackEvent = (id, eventType, questionId = null) =>
+    postApi("/api/faq/track", { leadId: id, eventType, questionId });
+
+  const handleFlip = (faq) => {
+    if (openId === faq.id) {
+      setOpenId(null);
+      return;
+    }
+    setOpenId(faq.id);
+    if (firstQuestionRef.current === null) {
+      firstQuestionRef.current = faq.id;
+      if (leadId) {
+        trackEvent(leadId, "question_opened", faq.id).catch((error) => {
+          setActionError(`Unable to record the first question: ${error.message}`);
+        });
+      }
+    }
+  };
+
+  const completeDecode = async (id, questionId) => {
+    if (decodeInProgressRef.current) return;
+    decodeInProgressRef.current = true;
+    setTrackingDecode(true);
+    setActionError("");
+    try {
+      await trackEvent(id, "decode_more_clicked", questionId);
+      navigate(downloadUrl);
+    } catch (error) {
+      setActionError(`Unable to record Decode More: ${error.message}. Please try again.`);
+    } finally {
+      decodeInProgressRef.current = false;
+      setTrackingDecode(false);
+    }
+  };
+
+  const handleDecodeMore = (faq = null) => {
+    if (trackingDecode) return;
+    const questionId = faq?.id ?? null;
+    if (!leadId) {
+      pendingDecodeRef.current = questionId;
+      setFormError("");
+      setShowLeadForm(true);
+      return;
+    }
+    void completeDecode(leadId, questionId);
   };
 
   const closeDecode = () => {
-    if (!saving) setShowLeadForm(false);
+    if (!saving) {
+      pendingDecodeRef.current = undefined;
+      setShowLeadForm(false);
+    }
   };
 
   const handleLeadSubmit = async (event) => {
     event.preventDefault();
     setFormError("");
-    if (!/^\d{10}$/.test(lead.mobile.trim())) {
-      setFormError("Enter a valid 10-digit mobile number.");
+    const name = lead.name.trim();
+    const mobileNumber = lead.mobile.trim();
+    const email = lead.email.trim();
+    if (!name) {
+      setFormError("Enter your name.");
       return;
     }
-    if (typeof onSaveLead !== "function") {
-      setFormError("Lead saving is not configured yet. Connect the backend API before submitting.");
+    if (!mobileNumber && !email) {
+      setFormError("Enter either a mobile number or an email address.");
+      return;
+    }
+    if (mobileNumber && !/^\d{10}$/.test(mobileNumber)) {
+      setFormError("Enter a valid 10-digit mobile number, or leave it blank.");
+      return;
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setFormError("Enter a valid email address, or leave it blank.");
       return;
     }
     try {
       setSaving(true);
-      await onSaveLead({
-        name: lead.name.trim(),
-        mobile: lead.mobile.trim(),
-        email: lead.email.trim(),
-      });
+      const response = await postApi("/api/faq/leads", { name, mobileNumber, email });
+      const id = response.data?.leadId;
+      if (!id) throw new Error("Lead ID missing from API response");
+      setLeadId(id);
       setShowLeadForm(false);
-      navigate(downloadUrl);
+
+      // A visitor may have browsed a card before submitting the popup.
+      // Save that first click now that the lead has an ID.
+      if (firstQuestionRef.current !== null) {
+        try {
+          await trackEvent(id, "question_opened", firstQuestionRef.current);
+        } catch (error) {
+          setActionError(`Contact saved, but the first FAQ click was not recorded: ${error.message}`);
+        }
+      }
+
+      const pendingQuestionId = pendingDecodeRef.current;
+      pendingDecodeRef.current = undefined;
+      if (pendingQuestionId !== undefined) {
+        await completeDecode(id, pendingQuestionId);
+      }
     } catch (error) {
       setFormError(error?.message || "Unable to save your details. Please try again.");
     } finally {
@@ -217,8 +311,9 @@ export default function FAQPage({
           <h2>Find your little moment of calm</h2>
         </div>
 
+        {actionError && <p className="hs-faq-lead-error" role="alert">{actionError}</p>}
         <div className="hs-faq-floating-bar">
-          <button type="button" className="hs-faq-decode-btn" onClick={openDecode}>
+          <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore()}>
             Decode More
           </button>
         </div>
@@ -236,25 +331,25 @@ export default function FAQPage({
                       className="hs-faq-trigger"
                       aria-label={`Show answer for ${faq.title}`}
                       aria-expanded={isOpen}
-                      onClick={() => setOpenId(faq.id)}
+                      onClick={() => handleFlip(faq)}
                     >
                       <span className="hs-faq-number">{String(faq.id).padStart(2, "0")}</span>
                       <span className="hs-faq-trigger-copy">
                         <span className="hs-faq-topic">{faq.title}</span>
                         <span className="hs-faq-question">{faq.question}</span>
                       </span>
-                      <span className="hs-faq-turn-icon" aria-hidden="true">↻</span>
+                      
                     </button>
                   </div>
-                  <div className="hs-faq-flip-back" aria-hidden={!isOpen} inert={!isOpen}>
+                  <div className="hs-faq-flip-back" aria-hidden={!isOpen} inert={!isOpen} onClick={(event) => { if (!event.target.closest("button, a")) setOpenId(null); }} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); setOpenId(null); } }} tabIndex={isOpen ? 0 : -1} aria-label={`Tap to flip ${faq.title} back to question`}>
                     <div className="hs-faq-back-top">
                       <span className="hs-faq-topic">{String(faq.id).padStart(2, "0")} · {faq.title}</span>
-                      <button type="button" className="hs-faq-turn-back" onClick={() => setOpenId(null)} aria-label={`Return to ${faq.title} question`}>↶</button>
+                      <span className="hs-faq-flip-hint">Tap card to flip back</span>
                     </div>
                     <div className="hs-faq-answer">
                       <h4>{faq.tip}</h4>
                       <p>{faq.answer}</p>
-                      <button type="button" className="hs-faq-decode-btn" onClick={openDecode}>Decode More</button>
+                      <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore(faq)}>Decode More</button>
                     </div>
                   </div>
                 </div>
@@ -300,19 +395,20 @@ export default function FAQPage({
                 <label htmlFor="hs-lead-name">Full name</label>
                 <input id="hs-lead-name" name="name" autoComplete="name" required maxLength={100} value={lead.name} onChange={(e) => setLead({ ...lead, name: e.target.value })} placeholder="Enter your name" />
               </div>
+              <p className="hs-faq-contact-hint">Enter at least one contact method — phone or email.</p>
               <div className="hs-faq-field">
                 <label htmlFor="hs-lead-mobile">Mobile number</label>
-                <input id="hs-lead-mobile" name="mobile" type="tel" inputMode="numeric" autoComplete="tel" required maxLength={10} pattern="[0-9]{10}" value={lead.mobile} onChange={(e) => setLead({ ...lead, mobile: e.target.value.replace(/\D/g, "").slice(0, 10) })} placeholder="10-digit mobile number" />
+                <input id="hs-lead-mobile" name="mobile" type="tel" inputMode="numeric" autoComplete="tel" maxLength={10} pattern="[0-9]{10}" value={lead.mobile} onChange={(e) => setLead({ ...lead, mobile: e.target.value.replace(/\D/g, "").slice(0, 10) })} placeholder="10-digit mobile number" />
               </div>
               <div className="hs-faq-field">
                 <label htmlFor="hs-lead-email">Email address</label>
-                <input id="hs-lead-email" name="email" type="email" autoComplete="email" required maxLength={254} value={lead.email} onChange={(e) => setLead({ ...lead, email: e.target.value })} placeholder="Enter your email" />
+                <input id="hs-lead-email" name="email" type="email" autoComplete="email" maxLength={254} value={lead.email} onChange={(e) => setLead({ ...lead, email: e.target.value })} placeholder="Enter your email" />
               </div>
               {formError && <p className="hs-faq-lead-error" role="alert">{formError}</p>}
-              <button type="submit" className="hs-faq-decode-btn hs-faq-submit" disabled={saving}>
-                {saving ? "Saving..." : "Continue to HerSolace"}
+              <button type="submit" className="hs-faq-decode-btn hs-faq-submit" disabled={saving || trackingDecode}>
+                {saving ? "Saving..." : "Continue"}
               </button>
-              <p className="hs-faq-privacy">Your details will be sent only when you submit this form. Connect your backend to store them securely.</p>
+              <p className="hs-faq-privacy">Your details are submitted to HerSolace when you select Continue.</p>
             </form>
           </div>
         </div>
