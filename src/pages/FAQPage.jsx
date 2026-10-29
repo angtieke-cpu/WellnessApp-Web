@@ -136,7 +136,7 @@ const styles = `
 .hs-faq-front-hint{font-size:10px;font-weight:700;color:#a177ad;white-space:nowrap}
 .hs-faq-flip-front .hs-faq-trigger{gap:10px}
 .hs-faq-flip-front .hs-faq-trigger-copy{min-width:0}
-@media(max-width:767px){.hs-faq-header-discover{top:12px;left:auto;right:67px;padding:9px 13px;font-size:11px}.hs-faq-front-hint{font-size:9px;max-width:57px;white-space:normal;text-align:center}}
+@media(max-width:767px){.hs-faq-header-discover{top:12px;left:auto;right:150px;padding:12px 27px;font-size:11px}.hs-faq-front-hint{font-size:9px;max-width:57px;white-space:normal;text-align:center}}
 
 `;
 
@@ -355,7 +355,7 @@ export default function FAQPage({
           })}
         </div>
         <div className="hs-faq-bottom-cta">
-          <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore()} disabled={trackingDecode}>Discover More with HerSolace</button>
+          <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore()} disabled={trackingDecode}>Decode More</button>
         </div>
       </section>
 
