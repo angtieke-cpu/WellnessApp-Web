@@ -93,6 +93,11 @@ const styles = `
 .hs-faq-field{display:grid;gap:5px}
 .hs-faq-field label{font-size:12px;font-weight:700;color:#45364f}
 .hs-faq-field input{width:100%;border:1px solid #e5d9e8;border-radius:10px;padding:12px;font:14px Manrope,Arial,sans-serif;color:#382b47;background:#fff}
+.hs-faq-phone-wrap{display:flex;align-items:stretch;border:1px solid #e5d9e8;border-radius:10px;overflow:hidden;background:#fff}
+.hs-faq-phone-prefix{display:flex;align-items:center;gap:7px;padding:0 12px;background:#f8f3fa;border-right:1px solid #e5d9e8;color:#45364f;font:600 14px Manrope,Arial,sans-serif;white-space:nowrap}
+.hs-faq-field .hs-faq-phone-input{border:0;border-radius:0;min-width:0;flex:1}
+.hs-faq-phone-wrap:focus-within{outline:2px solid #c39bce;outline-offset:1px}
+.hs-faq-field .hs-faq-phone-input:focus{outline:none}
 .hs-faq-field input:focus{outline:2px solid #c39bce;outline-offset:1px}
 .hs-faq-lead-error{font-size:12px;color:#b42346;margin:0}
 .hs-faq-submit{width:100%;margin-top:6px;animation:none}
@@ -398,7 +403,10 @@ export default function FAQPage({
               <p className="hs-faq-contact-hint">Enter at least one contact method — phone or email.</p>
               <div className="hs-faq-field">
                 <label htmlFor="hs-lead-mobile">Mobile number</label>
-                <input id="hs-lead-mobile" name="mobile" type="tel" inputMode="numeric" autoComplete="tel" maxLength={10} pattern="[0-9]{10}" value={lead.mobile} onChange={(e) => setLead({ ...lead, mobile: e.target.value.replace(/\D/g, "").slice(0, 10) })} placeholder="10-digit mobile number" />
+                <div className="hs-faq-phone-wrap">
+                  <span className="hs-faq-phone-prefix" aria-label="India country calling code">🇮🇳 +91</span>
+                  <input className="hs-faq-phone-input" id="hs-lead-mobile" name="mobile" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={10} pattern="[0-9]{10}" value={lead.mobile} onChange={(e) => setLead({ ...lead, mobile: e.target.value.replace(/\D/g, "").slice(0, 10) })} placeholder="10-digit mobile number" />
+                </div>
               </div>
               <div className="hs-faq-field">
                 <label htmlFor="hs-lead-email">Email address</label>
