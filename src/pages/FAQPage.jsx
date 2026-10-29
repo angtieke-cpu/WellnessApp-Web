@@ -297,7 +297,7 @@ export default function FAQPage({
             </Link>
           ))}
         </nav>
-        <button type="button" className="hs-faq-header-discover hs-faq-decode-btn" onClick={() => handleDecodeMore()} disabled={trackingDecode}>Discover More</button>
+        <button type="button" className="hs-faq-header-discover hs-faq-decode-btn" onClick={() => handleDecodeMore()} disabled={trackingDecode}>Decode More</button>
         <Link className="hs-faq-banner" to={HOME_URL} aria-label="HerSolace home">
           <img src={logoSrc} alt="HerSolace — Decode Hormones, Discover You" />
         </Link>
@@ -341,12 +341,12 @@ export default function FAQPage({
                   <div className="hs-faq-flip-back" aria-hidden={!isOpen} inert={!isOpen} onClick={(event) => { if (!event.target.closest("button, a")) setOpenId(null); }} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); setOpenId(null); } }} tabIndex={isOpen ? 0 : -1} aria-label={`Tap to flip ${faq.title} back to question`}>
                     <div className="hs-faq-back-top">
                       <span className="hs-faq-topic">{String(faq.id).padStart(2, "0")} · {faq.title}</span>
-                      <span className="hs-faq-flip-hint">Tap card to flip back</span>
+                      {/* <span className="hs-faq-flip-hint">Tap card to flip back</span> */}
                     </div>
                     <div className="hs-faq-answer">
                       <h4>{faq.tip}</h4>
                       <p>{faq.answer}</p>
-                      <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore(faq)}>Discover More</button>
+                      <button type="button" className="hs-faq-decode-btn" onClick={() => handleDecodeMore(faq)}>Decode More</button>
                     </div>
                   </div>
                 </div>
