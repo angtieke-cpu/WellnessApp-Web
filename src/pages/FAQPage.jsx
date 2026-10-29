@@ -138,7 +138,7 @@ const styles = `
 .hs-faq-flip-back .hs-faq-answer p{font-size:13px;line-height:1.45;margin:0 0 10px}
 .hs-faq-flip-back .hs-faq-decode-btn{padding:8px 16px;min-width:115px;font-size:11px}
 .hs-faq-flip-back:focus-within,.hs-faq-flip-front:focus-within{outline:2px solid #b967ad;outline-offset:2px}
-@media(max-width:640px){.hs-faq-flip-inner{height:90px}.hs-faq-flip-card.is-open .hs-faq-flip-inner{height:215px}.hs-faq-flip-front .hs-faq-trigger{padding:10px 13px}.hs-faq-flip-back{padding:12px 14px}.hs-faq-flip-back .hs-faq-answer p{font-size:12px}}
+@media(max-width:640px){.hs-faq-flip-inner{height:90px}.hs-faq-flip-card.is-open .hs-faq-flip-inner{height:150px}.hs-faq-flip-front .hs-faq-trigger{padding:10px 13px}.hs-faq-flip-back{padding:12px 14px}.hs-faq-flip-back .hs-faq-answer p{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.hs-faq-flip-inner{transition:none}}
 
 /* Discover buttons: header beside the mobile menu, and below the questions. */
