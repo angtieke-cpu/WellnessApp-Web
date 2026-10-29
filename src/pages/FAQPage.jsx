@@ -72,6 +72,17 @@ const styles = `
 .hs-faq-accordion.expanded{grid-template-rows:1fr;opacity:1}
 .hs-faq-accordion-inner{min-height:0;overflow:hidden}
 .hs-faq-answer{margin:0 20px 18px 72px;padding:16px 0 0;border-top:1px solid #f0e8f0;text-align:left}
+.hs-faq-answer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+}
+
+.hs-faq-answer button {
+  align-self: center;
+  margin-top: 20px;
+}
 .hs-faq-answer h4{font-size:19px;margin:0 0 6px;color:var(--faq-plum);text-align:left}
 .hs-faq-answer p{font-size:14px;line-height:1.6;color:#5b5062;margin:0 0 16px;text-align:left}
 .hs-faq-answer .hs-faq-decode-btn{padding:10px 19px;font-size:12px;min-width:132px;animation:none;box-shadow:0 6px 18px rgba(181,72,143,.18)}
@@ -340,7 +351,7 @@ export default function FAQPage({
                   </div>
                   <div className="hs-faq-flip-back" aria-hidden={!isOpen} inert={!isOpen} onClick={(event) => { if (!event.target.closest("button, a")) setOpenId(null); }} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); setOpenId(null); } }} tabIndex={isOpen ? 0 : -1} aria-label={`Tap to flip ${faq.title} back to question`}>
                     <div className="hs-faq-back-top">
-                      <span className="hs-faq-topic">{String(faq.id).padStart(2, "0")} · {faq.title}</span>
+                      {/* <span className="hs-faq-topic">{String(faq.id).padStart(2, "0")} · {faq.title}</span> */}
                       {/* <span className="hs-faq-flip-hint">Tap card to flip back</span> */}
                     </div>
                     <div className="hs-faq-answer">
