@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import "./HerSolaceDownload.css";
 
@@ -29,6 +30,7 @@ function getDeviceType() {
 export default function HerSolaceDownload() {
   const [device, setDevice] = useState("desktop");
   const [alreadyRedirected, setAlreadyRedirected] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const detectedDevice = getDeviceType();
@@ -63,7 +65,11 @@ export default function HerSolaceDownload() {
           : GOOGLE_PLAY_LINK;
 
       window.location.replace(storeUrl);
+      return;
     }
+
+    // Display the download page after device detection
+    setIsLoading(false);
   }, []);
 
   const isMobile = device === "ios" || device === "android";
@@ -95,6 +101,22 @@ export default function HerSolaceDownload() {
         ? "Continue to Google Play"
         : "Get it on Google Play";
 
+  // Loading screen shown before device detection completes
+  if (isLoading) {
+    return (
+      <main className="hersolace-download">
+        <div
+          className="hs-download-loading"
+          role="status"
+          aria-live="polite"
+        >
+          <div className="hs-download-spinner" />
+          <p>Opening HerSolace...</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="hersolace-download">
       <p className="eyebrow">Beta launch</p>
@@ -107,7 +129,7 @@ export default function HerSolaceDownload() {
       >
         <div className="brand-mark">
           <img
-            src="logo.png"
+            src="/logo.png"
             alt="HerSolace logo"
           />
         </div>
